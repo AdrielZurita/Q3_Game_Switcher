@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Switcher.sln"
+    "dotnet.defaultSolution": "Q3_Game_Switcher.sln"
 }
