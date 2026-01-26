@@ -38,8 +38,8 @@ public class First_Person_Movement : MonoBehaviour
         PlayerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         //play camera control via mouse
         PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        print("mouse x value:" + Input.GetAxis("Mouse X"));
-        print("mouse y value:" + Input.GetAxis("Mouse Y"));
+        print("mouse x value:" + PlayerMouseInput.x);
+        print("mouse y value:" + PlayerMouseInput.y);
 
         MovePlayer();
         MoveCamera();
@@ -60,6 +60,56 @@ public class First_Person_Movement : MonoBehaviour
     }
 
     private void MovePlayer()
+    {   
+        //rotates the players movement vector to where they're facing
+        Velocity = PlayerMovementInput.x * transform.right + PlayerMovementInput.z * transform.forward;
+
+        //if the player is on the ground
+        if (Controller.isGrounded)
+        {
+            Velocity.y = -1f;
+
+            //only jumps if not sneaking
+            if (Input.GetKeyDown(KeyCode.Space) && Sneaking == false)
+            {
+                Velocity.y = JumpForce;
+            }
+        }
+        else
+        {   
+            //accelerates downward if player isn't grounded
+            Velocity.y += Gravity * -2f * Time.deltaTime;
+        }
+
+        float tempSpeed;
+
+        //checks if player is sneaking 
+        if (Sneaking)
+        {
+            tempSpeed = SneakSpeed;
+        }
+        else
+        {
+            //sets it to base speed otherwise
+            tempSpeed = Speed;
+        } 
+
+        Controller.Move(Velocity * tempSpeed * Time.deltaTime);
+
+    }
+
+    private void MoveCamera()
+    {
+        xRotation -= PlayerMouseInput.y * Sensetivity;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        print("xRotation: " + xRotation);
+
+        transform.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);
+        PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        //PlayerCamera.rotation = (xRotation, Player.rotation.y, 0f);
+    }
+
+    /*private void MovePlayer()
     {   
         //rotates the players movement vector to where they're facing
         Vector3 MoveVector = transform.TransformDirection(PlayerMovementInput);
@@ -105,5 +155,5 @@ public class First_Person_Movement : MonoBehaviour
 
         transform.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-    }
+    }*/
 }
