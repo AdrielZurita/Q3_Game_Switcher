@@ -5,9 +5,10 @@ public class First_Person_Movement : MonoBehaviour
     //remove: sneak maybe?
     
     private Vector3 Velocity;
+    private Vector3 FallSpeed = new Vector3 (0f, 0f, 0f);
     private Vector3 PlayerMovementInput;
     private Vector2 PlayerMouseInput;
-    private bool Sneaking = false;
+    //private bool Sneaking = false;
     private float xRotation;
 
     [Header("Components Needed")]
@@ -20,10 +21,12 @@ public class First_Person_Movement : MonoBehaviour
     [SerializeField] private float JumpForce;
     [SerializeField] private float Sensetivity;
     [SerializeField] private float Gravity = 9.81f;
+    /*
     [Space]
     [Header("Sneaking")]
     [SerializeField] private bool Sneak = false;
     [SerializeField] private float SneakSpeed;
+    */
 
     void Start()
     {
@@ -38,13 +41,12 @@ public class First_Person_Movement : MonoBehaviour
         PlayerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         //play camera control via mouse
         PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        print("mouse x value:" + PlayerMouseInput.x);
-        print("mouse y value:" + PlayerMouseInput.y);
 
         MovePlayer();
         MoveCamera();
 
         //sneaking control
+        /*
         if (Input.GetKey(KeyCode.RightShift) && Sneak)
         {
             //shrinks player's y scale
@@ -57,6 +59,7 @@ public class First_Person_Movement : MonoBehaviour
             Player.localScale = new Vector3(1f, 1f, 1f);
             Sneaking = false;
         }
+        */
     }
 
     private void MovePlayer()
@@ -67,23 +70,30 @@ public class First_Person_Movement : MonoBehaviour
         //if the player is on the ground
         if (Controller.isGrounded)
         {
-            Velocity.y = -1f;
+            FallSpeed.y = -1f;
 
             //only jumps if not sneaking
+            /*
             if (Input.GetKeyDown(KeyCode.Space) && Sneaking == false)
             {
                 Velocity.y = JumpForce;
+            }
+            */
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FallSpeed.y = JumpForce;
             }
         }
         else
         {   
             //accelerates downward if player isn't grounded
-            Velocity.y += Gravity * -2f * Time.deltaTime;
+            FallSpeed.y += Gravity * -2f  * Time.deltaTime;
         }
 
         float tempSpeed;
 
         //checks if player is sneaking 
+        /*
         if (Sneaking)
         {
             tempSpeed = SneakSpeed;
@@ -92,24 +102,28 @@ public class First_Person_Movement : MonoBehaviour
         {
             //sets it to base speed otherwise
             tempSpeed = Speed;
-        } 
+        } */
+
+        tempSpeed = Speed;
 
         Controller.Move(Velocity * tempSpeed * Time.deltaTime);
+        Controller.Move(FallSpeed * Time.deltaTime);
 
     }
 
     private void MoveCamera()
     {
+        PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         xRotation -= PlayerMouseInput.y * Sensetivity;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         print("xRotation: " + xRotation);
 
         transform.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        //PlayerCamera.rotation = (xRotation, Player.rotation.y, 0f);
     }
 
-    /*private void MovePlayer()
+    /*
+    private void MovePlayer()
     {   
         //rotates the players movement vector to where they're facing
         Vector3 MoveVector = transform.TransformDirection(PlayerMovementInput);
@@ -155,5 +169,6 @@ public class First_Person_Movement : MonoBehaviour
 
         transform.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-    }*/
+    }
+    */
 }
