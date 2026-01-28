@@ -5,9 +5,10 @@ public class First_Person_Movement : MonoBehaviour
     //remove: sneak maybe?
     
     private Vector3 Velocity;
+    private Vector3 FallSpeed = new Vector3 (0f, 0f, 0f);
     private Vector3 PlayerMovementInput;
     private Vector2 PlayerMouseInput;
-    private bool Sneaking = false;
+    //private bool Sneaking = false;
     private float xRotation;
 
     [Header("Components Needed")]
@@ -20,10 +21,12 @@ public class First_Person_Movement : MonoBehaviour
     [SerializeField] private float JumpForce;
     [SerializeField] private float Sensetivity;
     [SerializeField] private float Gravity = 9.81f;
+    /*
     [Space]
     [Header("Sneaking")]
     [SerializeField] private bool Sneak = false;
     [SerializeField] private float SneakSpeed;
+    */
 
     void Start()
     {
@@ -39,24 +42,34 @@ public class First_Person_Movement : MonoBehaviour
         //play camera control via mouse
         PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        MovePlayer();
-        MoveCamera();
+        //rotates the players movement vector to where they're facing
+        Velocity = PlayerMovementInput.x * transform.right + PlayerMovementInput.z * transform.forward;
 
-        //sneaking control
-        if (Input.GetKey(KeyCode.RightShift) && Sneak)
+        //if the player is on the ground
+        if (Controller.isGrounded)
         {
-            //shrinks player's y scale
-            Player.localScale = new Vector3(1f, 0.5f, 1f);
-            Sneaking = true;
+            FallSpeed.y = -1f;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FallSpeed.y = JumpForce;
+            }
         }
-        if (Input.GetKeyUp(KeyCode.RightShift))
-        {
-            //unshrinks player's y sscale
-            Player.localScale = new Vector3(1f, 1f, 1f);
-            Sneaking = false;
+        else
+        {   
+            //accelerates downward if player isn't grounded
+            FallSpeed.y += Gravity * -2f  * Time.deltaTime;
         }
+
+        Controller.Move(Velocity * Speed * Time.deltaTime);
+        Controller.Move(FallSpeed * Time.deltaTime);
+
+        //xRotation -= PlayerMouseInput.y * Sensetivity;
+        //xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
     }
 
+    /*
     private void MovePlayer()
     {   
         //rotates the players movement vector to where they're facing
@@ -103,4 +116,5 @@ public class First_Person_Movement : MonoBehaviour
         Player.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);  // Rotate player body instead
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
+    */
 }
