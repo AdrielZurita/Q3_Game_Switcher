@@ -5,7 +5,9 @@ using UnityEngine;
 public class DiscHandler : MonoBehaviour
 {
     public GameObject gravBoxObj;
-    public Transform discTransform;
+    private Transform discTransform;
+    public bool returning = false;
+    public ObjectPlsHelp objectPlsHelp;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +23,21 @@ public class DiscHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag == "CanWall")
+            if (collision.gameObject.tag == "CanWall" && objectPlsHelp.returning == false)
             {
                 Debug.Log("Hit Wall");
                 Destroy(this.gameObject);
                 GameObject gravBox = Instantiate(gravBoxObj, transform.position, transform.rotation);
+            }
+            if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
+            {
+                objectPlsHelp.havedisc = true;
+                objectPlsHelp.returning = false;
+                Destroy(this.gameObject);
+            }
+            if (collision.gameObject.tag == "CantWall" && objectPlsHelp.returning == false)
+            {
+                objectPlsHelp.returning = true;
             }
         }
 }
