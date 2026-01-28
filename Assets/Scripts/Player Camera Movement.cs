@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Playermovement : MonoBehaviour
+public class PlayerCameramovement : MonoBehaviour
 {
         
     public float sensitivityX;
@@ -35,8 +35,5 @@ public class Playermovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         cameraPosition.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-
-        
-
     }
 }

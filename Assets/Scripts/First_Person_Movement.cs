@@ -42,28 +42,6 @@ public class First_Person_Movement : MonoBehaviour
         //play camera control via mouse
         PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        MovePlayer();
-        MoveCamera();
-
-        //sneaking control
-        /*
-        if (Input.GetKey(KeyCode.RightShift) && Sneak)
-        {
-            //shrinks player's y scale
-            Player.localScale = new Vector3(1f, 0.5f, 1f);
-            Sneaking = true;
-        }
-        if (Input.GetKeyUp(KeyCode.RightShift))
-        {
-            //unshrinks player's y sscale
-            Player.localScale = new Vector3(1f, 1f, 1f);
-            Sneaking = false;
-        }
-        */
-    }
-
-    private void MovePlayer()
-    {   
         //rotates the players movement vector to where they're facing
         Velocity = PlayerMovementInput.x * transform.right + PlayerMovementInput.z * transform.forward;
 
@@ -72,13 +50,6 @@ public class First_Person_Movement : MonoBehaviour
         {
             FallSpeed.y = -1f;
 
-            //only jumps if not sneaking
-            /*
-            if (Input.GetKeyDown(KeyCode.Space) && Sneaking == false)
-            {
-                Velocity.y = JumpForce;
-            }
-            */
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 FallSpeed.y = JumpForce;
@@ -90,36 +61,12 @@ public class First_Person_Movement : MonoBehaviour
             FallSpeed.y += Gravity * -2f  * Time.deltaTime;
         }
 
-        float tempSpeed;
-
-        //checks if player is sneaking 
-        /*
-        if (Sneaking)
-        {
-            tempSpeed = SneakSpeed;
-        }
-        else
-        {
-            //sets it to base speed otherwise
-            tempSpeed = Speed;
-        } */
-
-        tempSpeed = Speed;
-
-        Controller.Move(Velocity * tempSpeed * Time.deltaTime);
+        Controller.Move(Velocity * Speed * Time.deltaTime);
         Controller.Move(FallSpeed * Time.deltaTime);
 
-    }
+        //xRotation -= PlayerMouseInput.y * Sensetivity;
+        //xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-    private void MoveCamera()
-    {
-        PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        xRotation -= PlayerMouseInput.y * Sensetivity;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        print("xRotation: " + xRotation);
-
-        transform.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);
-        PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
     /*
