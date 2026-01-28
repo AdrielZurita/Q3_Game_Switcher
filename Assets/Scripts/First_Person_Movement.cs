@@ -38,8 +38,6 @@ public class First_Person_Movement : MonoBehaviour
         PlayerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         //play camera control via mouse
         PlayerMouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        print("mouse x value:" + Input.GetAxis("Mouse X"));
-        print("mouse y value:" + Input.GetAxis("Mouse Y"));
 
         MovePlayer();
         MoveCamera();
@@ -101,9 +99,8 @@ public class First_Person_Movement : MonoBehaviour
     {
         xRotation -= PlayerMouseInput.y * Sensetivity;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        print("xRotation: " + xRotation);
 
-        transform.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);
+        Player.Rotate(0f, PlayerMouseInput.x * Sensetivity, 0f);  // Rotate player body instead
         PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 }
