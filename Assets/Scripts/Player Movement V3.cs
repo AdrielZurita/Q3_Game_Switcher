@@ -56,7 +56,7 @@ public class PlayerMovementV3 : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(KeyCode.Space) && readyToJump)
+        if(Input.GetKey(KeyCode.Space) && readyToJump && grounded)
         {
             Jump();
             readyToJump = false;
