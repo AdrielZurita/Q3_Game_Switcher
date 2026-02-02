@@ -8,6 +8,7 @@ public class GravChanger : MonoBehaviour
     public float gravityMagnitude = 9.81f;
     private Rigidbody plyrRb;
     private Transform boxTransform;
+    private bool playerInBox = false;
     void Start()
     {
         plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
@@ -18,13 +19,23 @@ public class GravChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
+        if (playerInBox)
         {
             plyrRb.AddForce(gravityDirection.normalized * gravityMagnitude * plyrRb.mass, ForceMode.Acceleration);
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            playerInBox = true;
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            playerInBox = false;
         }
     }
 }
