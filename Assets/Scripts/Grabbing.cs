@@ -4,34 +4,55 @@ using UnityEngine;
 
 public class Grabbing : MonoBehaviour
 {
-    public Vector3 offset = new Vector3(0, 0, 3);
+    public Vector3 offset = new Vector3(0, 0, 0);
     public Transform cameraPosition;
-    public bool toggle;
-    public bool GrabInRange;
+    public LayerMask box;
+    public float pullForce = 10f;
+    public float grabRange = 5f;
+    [SerializeField] private bool isHolding = false;
+    [SerializeField] private bool GrabInRange;
+    [SerializeField] private Vector3 grabDirection;
+    [SerializeField] private GameObject holdPoint;
+    [SerializeField] private GameObject grabbedObject;
+    [SerializeField] private Vector3 pullDirection;
     
     void Update()
     {
-        //grabDirection = offset * cameraPosition.forward;
+        grabDirection = cameraPosition.forward;
         //if (Input.GetMouseButtonDown(0)) this was for using left click to grab
-        if (Input.GetKey(KeyCode.E)) // this is for using E to grab
+        if (Input.GetKeyDown(KeyCode.E)) // this is for using E to grab
         {
-            if (toggle)
+            RaycastHit hit;
+            if(Physics.Raycast(transform.position, grabDirection,out hit, grabRange, box))
             {
-                toggle = false;
+                if(!isHolding)
+                {
+                    grabbedObject = hit.transform.gameObject;
+                    isHolding = true;
+                }
+                else
+                {   
+
+                    grabbedObject = null;
+                    isHolding = false;
+                }
             }
             else
             {
-                toggle = true;
+                if(isHolding)
+                {
+                    isHolding = false;
+                }
             }
+
+            
         }
 
-        if (toggle)
-        {
-            GrabInRange = true; //Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        }
-        else
-        {
-            
+        if (isHolding)
+        { 
+            //grabbedObject.transform.position = holdPoint.transform.position;
+            pullDirection = (holdPoint.transform.position - grabbedObject.transform.position);
+            grabbedObject.GetComponent<Rigidbody>().velocity = pullDirection * pullForce;
         }
     }
 }
