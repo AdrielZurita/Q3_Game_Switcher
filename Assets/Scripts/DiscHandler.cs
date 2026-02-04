@@ -11,6 +11,9 @@ public class DiscHandler : MonoBehaviour
     public ObjectPlsHelp objectPlsHelp;
     public float bounceForce = 15f;
     public float bounceDamping = 0.8f;
+    public LayerMask groundLayer;
+    public float raycastDistance = 4f;
+    private Vector3 newGravityDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +24,27 @@ public class DiscHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /*void FixedUpdate()
     {
-        
-    }
+        RaycastHit hit;
+        if (Physics.Raycast(discTransform.position, discTransform.forward, out hit, raycastDistance, groundLayer))
+        {
+            newGravityDirection = -hit.normal;
+        }
+    }*/
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "CanWall" && objectPlsHelp.returning == false)
         {
-            Destroy(this.gameObject);
+            RaycastHit hit;
+            if (Physics.Raycast(discTransform.position, discTransform.forward, out hit, raycastDistance, groundLayer))
+            {
+                newGravityDirection = -hit.normal;
+            }
+            discTransform.rotation = Quaternion.LookRotation(newGravityDirection, transform.up);
             GameObject gravBox = Instantiate(gravBoxObj, transform.position, transform.rotation);
+            Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
         {

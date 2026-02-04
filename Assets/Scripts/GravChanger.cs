@@ -12,6 +12,7 @@ public class GravChanger : MonoBehaviour
         plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         boxTransform = this.transform;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        FaceTowardsWall();
     }
 
     // Update is called once per frame
@@ -33,5 +34,11 @@ public class GravChanger : MonoBehaviour
         {
             playerTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
+    }
+    public void FaceTowardsWall(RaycastHit hit)
+    {
+        Vector3 targetDirection = Vector3.zero;
+        targetDirection = hit.point - transform.position;
+        transform.rotation = Quaternion.LookRotation(-hit.normal, transform.up);
     }
 }
