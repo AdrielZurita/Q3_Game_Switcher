@@ -6,16 +6,16 @@ public class Grabbing : MonoBehaviour
 {
     public Vector3 offset = new Vector3(0, 0, 0);
     public Transform cameraPosition;
-    public LayerMask box;
+    public LayerMask grabLayer;
     public float pullForce = 10f;
     public float grabRange = 5f;
-    [SerializeField] private bool isHolding = false;
-    [SerializeField] private bool GrabInRange;
-    [SerializeField] private Vector3 grabDirection;
+    private bool isHolding = false;
+    private bool GrabInRange;
+    private Vector3 grabDirection;
+    private Vector3 pullDirection;
     [SerializeField] private GameObject holdPoint;
     [SerializeField] private GameObject grabbedObject;
-    [SerializeField] private Vector3 pullDirection;
-    
+        
     void Update()
     {
         grabDirection = cameraPosition.forward;
@@ -23,7 +23,7 @@ public class Grabbing : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) // this is for using E to grab
         {
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, grabDirection,out hit, grabRange, box))
+            if(Physics.Raycast(transform.position, grabDirection,out hit, grabRange, grabLayer))
             {
                 if(!isHolding)
                 {
@@ -32,7 +32,7 @@ public class Grabbing : MonoBehaviour
                 }
                 else
                 {   
-
+                    grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
                     grabbedObject = null;
                     isHolding = false;
                 }
@@ -41,6 +41,8 @@ public class Grabbing : MonoBehaviour
             {
                 if(isHolding)
                 {
+                    grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
+                    grabbedObject = null;
                     isHolding = false;
                 }
             }
@@ -51,6 +53,7 @@ public class Grabbing : MonoBehaviour
         if (isHolding)
         { 
             //grabbedObject.transform.position = holdPoint.transform.position;
+            grabbedObject.GetComponent<Rigidbody>().freezeRotation = true;
             pullDirection = (holdPoint.transform.position - grabbedObject.transform.position);
             grabbedObject.GetComponent<Rigidbody>().velocity = pullDirection * pullForce;
         }
