@@ -30,7 +30,6 @@ public class DiscHandler : MonoBehaviour
     {
         if (collision.gameObject.tag == "CanWall" && objectPlsHelp.returning == false)
         {
-            Debug.Log("Hit Wall");
             Destroy(this.gameObject);
             GameObject gravBox = Instantiate(gravBoxObj, transform.position, transform.rotation);
         }

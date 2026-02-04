@@ -6,26 +6,28 @@ public class GravChanger : MonoBehaviour
 {
     private Rigidbody plyrRb;
     private Transform boxTransform;
-    public Transform playerTransform;
+    private Transform playerTransform;
     void Start()
     {
         plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         boxTransform = this.transform;
-        this.transform.LookAt(this.transform.position);
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("test");
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("testPlayer");
             playerTransform.rotation = this.transform.rotation;
         }
     }
-    void OnCollisionExit(Collision collision)
+    void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
