@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class GravChanger : MonoBehaviour
 {
-    public Vector3 gravityDirection = new Vector3(-1, 0, 0);
-    public float gravityMagnitude = 9.81f;
     private Rigidbody plyrRb;
     private Transform boxTransform;
+    private Transform playerTransform;
     void Start()
     {
         plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         boxTransform = this.transform;
-        this.transform.LookAt(this.transform.position + gravityDirection);
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider collision)
     {
-        if (other.gameObject.tag == "Player")
+        Debug.Log("test");
+        if (collision.gameObject.tag == "Player")
         {
-            plyrRb.AddForce(gravityDirection.normalized * gravityMagnitude * plyrRb.mass, ForceMode.Acceleration);
+            Debug.Log("testPlayer");
+            playerTransform.rotation = this.transform.rotation;
+        }
+    }
+    void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            playerTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }
