@@ -17,11 +17,7 @@ public class GravChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(discTransform.position, discTransform.forward, out hit, raycastDistance, groundLayer))
-        {
-            FaceTowardsWall(hit);
-        }
+       
     }
     void OnTriggerEnter(Collider collision)
     {
