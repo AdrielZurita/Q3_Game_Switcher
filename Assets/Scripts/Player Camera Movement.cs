@@ -33,7 +33,7 @@ public class PlayerCameramovement : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, yRotation, transform.localRotation.eulerAngles.z);
-        orientation.localRotation = Quaternion.Euler(orientation.rotation.eulerAngles.x, yRotation, 0);
+        orientation.localRotation = Quaternion.Euler(orientation.localRotation.eulerAngles.x, yRotation, 0);
         cameraPosition.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
     }
 }

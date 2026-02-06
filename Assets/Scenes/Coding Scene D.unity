@@ -808,7 +808,6 @@ Transform:
   - {fileID: 1602474111}
   - {fileID: 569049696}
   - {fileID: 1783134157}
-  - {fileID: 1667940993}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1543310677
@@ -829,6 +828,7 @@ MonoBehaviour:
   jumpCoolDown: 0.5
   airMult: 0.4
   jumpGravity: -0.7
+  sprintSpeedMultiplier: 1.2
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -1011,13 +1011,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667940992}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5.5500007}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.55, z: 5.5500007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2077842342}
-  m_Father: {fileID: 1543310676}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1712349099
 GameObject:
@@ -1272,6 +1272,7 @@ SceneRoots:
   - {fileID: 67192499}
   - {fileID: 809693403}
   - {fileID: 396424939}
+  - {fileID: 1667940993}
   - {fileID: 1543310676}
   - {fileID: 904456459}
   - {fileID: 1712349103}
