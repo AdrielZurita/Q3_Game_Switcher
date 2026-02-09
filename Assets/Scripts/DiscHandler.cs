@@ -13,6 +13,7 @@ public class DiscHandler : MonoBehaviour
     public float bounceDamping = 0.8f;
     public LayerMask groundLayer;
     public float raycastDistance = 4f;
+    public float spawnOffset = 0.1f;
     private Vector3 newGravityDirection;
 
     // Start is called before the first frame update
@@ -37,13 +38,24 @@ public class DiscHandler : MonoBehaviour
     {
         if (collision.gameObject.tag == "CanWall" && objectPlsHelp.returning == false)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(discTransform.position, discTransform.forward, out hit, raycastDistance, groundLayer))
+            ContactPoint contact = collision.contacts[0];
+            newGravityDirection = -contact.normal;
+
+            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, contact.normal);
+            if (forwardOnPlane.sqrMagnitude < 0.0001f)
             {
-                newGravityDirection = -hit.normal;
+                forwardOnPlane = Vector3.Cross(contact.normal, transform.right);
+                if (forwardOnPlane.sqrMagnitude < 0.0001f)
+                {
+                    forwardOnPlane = Vector3.Cross(contact.normal, Vector3.up);
+                }
             }
-            discTransform.rotation = Quaternion.LookRotation(newGravityDirection, transform.up);
-            GameObject gravBox = Instantiate(gravBoxObj, transform.position, transform.rotation);
+            forwardOnPlane.Normalize();
+
+            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, contact.normal);
+            Vector3 spawnPosition = contact.point + contact.normal * spawnOffset;
+
+            GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
@@ -59,5 +71,12 @@ public class DiscHandler : MonoBehaviour
             reflectedVelocity *= bounceDamping;
             discRigidbody.velocity = reflectedVelocity + (collision.contacts[0].normal * bounceForce);
         }
+    }
+
+    public void FaceTowardsWall(RaycastHit hit)
+    {
+        Vector3 targetDirection = Vector3.zero;
+        targetDirection = hit.point - transform.position;
+        transform.rotation = Quaternion.LookRotation(-hit.normal, transform.up);
     }
 }
