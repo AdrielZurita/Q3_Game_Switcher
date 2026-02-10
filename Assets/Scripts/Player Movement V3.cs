@@ -17,6 +17,7 @@ public class PlayerMovementV3 : MonoBehaviour
     [Header("ground check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public float heightCheckOffset = 0.2f;
     bool grounded;
     [Header("orientation")]
     public Transform orientation; 
@@ -33,7 +34,7 @@ public class PlayerMovementV3 : MonoBehaviour
 
     void Update()
     {
-        grounded = Physics.Raycast(transform.localPosition, -transform.up, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.localPosition, -transform.up, playerHeight * 0.5f + heightCheckOffset, whatIsGround);
         
         MyInput();
         SpeedControl();

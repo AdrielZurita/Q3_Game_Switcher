@@ -8,7 +8,7 @@ TagManager:
   - CanWall
   - GravBox
   - CantWall
-  - Grabbable
+  - box
   layers:
   - Default
   - TransparentFX
