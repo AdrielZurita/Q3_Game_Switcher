@@ -24,16 +24,6 @@ public class DiscHandler : MonoBehaviour
         discTransform.Rotate(90f, 0f, 0f);
     }
 
-    // Update is called once per frame
-    /*void FixedUpdate()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(discTransform.position, discTransform.forward, out hit, raycastDistance, groundLayer))
-        {
-            newGravityDirection = -hit.normal;
-        }
-    }*/
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "CanWall" && objectPlsHelp.returning == false)
@@ -55,7 +45,10 @@ public class DiscHandler : MonoBehaviour
             Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, contact.normal);
             Vector3 spawnPosition = contact.point + contact.normal * spawnOffset;
 
-            GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
+            if (GameObject.FindWithTag("GravBox") == null)
+            {
+                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
+            }
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
@@ -71,12 +64,5 @@ public class DiscHandler : MonoBehaviour
             reflectedVelocity *= bounceDamping;
             discRigidbody.velocity = reflectedVelocity + (collision.contacts[0].normal * bounceForce);
         }
-    }
-
-    public void FaceTowardsWall(RaycastHit hit)
-    {
-        Vector3 targetDirection = Vector3.zero;
-        targetDirection = hit.point - transform.position;
-        transform.rotation = Quaternion.LookRotation(-hit.normal, transform.up);
     }
 }
