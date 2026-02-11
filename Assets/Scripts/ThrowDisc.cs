@@ -9,10 +9,13 @@ public class ThrowDisc : MonoBehaviour
     public float returnVelocity = 500f;
     public ObjectPlsHelp objectPlsHelp;
     private bool discRotatedForReturn = false;
+    public Transform playerTransform;
     void Start()
     {
         objectPlsHelp.havedisc = true;
         objectPlsHelp.returning = false;
+        objectPlsHelp.inGravBox = false;
+        objectPlsHelp.isPositive = true;
     }
     void Update()
     {
@@ -45,6 +48,11 @@ public class ThrowDisc : MonoBehaviour
             disc.transform.position = Vector3.MoveTowards(disc.transform.position, this.transform.position, returnVelocity * Time.deltaTime);
             objectPlsHelp.returning = true;
             discRotatedForReturn = false;
+            if (objectPlsHelp.inGravBox)
+            {
+                playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+                objectPlsHelp.inGravBox = false;
+            }
         }
         
         if (objectPlsHelp.returning)
@@ -67,6 +75,11 @@ public class ThrowDisc : MonoBehaviour
                     discRotatedForReturn = false;
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && objectPlsHelp.havedisc == true)
+        {
+            objectPlsHelp.isPositive = !objectPlsHelp.isPositive;
         }
     }
 }
