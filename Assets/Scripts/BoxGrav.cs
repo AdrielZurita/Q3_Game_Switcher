@@ -12,12 +12,14 @@ public class BoxGrav : MonoBehaviour
     Rigidbody rb;
     public bool doFunnyStuff = false;
     public Grabbing grabbingScript;
+    public GameObject boxObj;
+    public GameObject boxParent;
 
     
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = boxParent.GetComponent<Rigidbody>();
         if (doFunnyStuff == false)
         {
             rb.freezeRotation = true;
