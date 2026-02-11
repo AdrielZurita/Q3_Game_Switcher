@@ -77,7 +77,7 @@ public class ThrowDisc : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && objectPlsHelp.havedisc == true)
+        if (Input.GetKeyDown(KeyCode.Q) && objectPlsHelp.havedisc == true)
         {
             objectPlsHelp.isPositive = !objectPlsHelp.isPositive;
         }

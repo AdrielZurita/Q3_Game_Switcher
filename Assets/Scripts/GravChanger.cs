@@ -35,6 +35,22 @@ public class GravChanger : MonoBehaviour
             float repulsionForce = 800f;
             plyrRb.AddForce(repulsionDirection * repulsionForce);
         }
+
+        if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
+        {
+            collision.gameObject.transform.rotation = this.transform.rotation;
+        }
+        else if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
+        {
+            Vector3 repulsionDirection = collision.transform.position - transform.position;
+            repulsionDirection.Normalize();
+            float repulsionForce = 800f;
+            Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
+            if (boxRb != null)
+            {
+                boxRb.AddForce(repulsionDirection * repulsionForce);
+            }
+        }
     }
     void OnTriggerExit(Collider collision)
     {
@@ -42,6 +58,11 @@ public class GravChanger : MonoBehaviour
         {
             objectPlsHelp.inGravBox = false;
             playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
+        {
+            collision.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -53,6 +74,17 @@ public class GravChanger : MonoBehaviour
             repulsionDirection.Normalize();
             float repulsionForce = 800f;
             plyrRb.AddForce(repulsionDirection * repulsionForce);
+        }
+        if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
+        {
+            Vector3 repulsionDirection = collision.transform.position - transform.position;
+            repulsionDirection.Normalize();
+            float repulsionForce = 800f;
+            Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
+            if (boxRb != null)
+            {
+                boxRb.AddForce(repulsionDirection * repulsionForce);
+            }
         }
     }
 
