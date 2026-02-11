@@ -14,6 +14,8 @@ public class ThrowDisc : MonoBehaviour
     {
         objectPlsHelp.havedisc = true;
         objectPlsHelp.returning = false;
+        objectPlsHelp.inGravBox = false;
+        objectPlsHelp.isPositive = true;
     }
     void Update()
     {

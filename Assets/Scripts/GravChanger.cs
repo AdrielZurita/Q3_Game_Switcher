@@ -30,15 +30,10 @@ public class GravChanger : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == false)
         {
-            // repel player
-            Rigidbody playerRb = collision.gameObject.GetComponent<Rigidbody>();
-            if (playerRb != null)
-            {
-                Vector3 repulsionDirection = collision.transform.position - transform.position;
-                repulsionDirection.Normalize();
-                float repulsionForce = 800f;
-                playerRb.AddForce(repulsionDirection * repulsionForce);
-            }
+            Vector3 repulsionDirection = collision.transform.position - transform.position;
+            repulsionDirection.Normalize();
+            float repulsionForce = 800f;
+            plyrRb.AddForce(repulsionDirection * repulsionForce);
         }
     }
     void OnTriggerExit(Collider collision)
@@ -47,6 +42,17 @@ public class GravChanger : MonoBehaviour
         {
             objectPlsHelp.inGravBox = false;
             playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == false)
+        {
+            Vector3 repulsionDirection = collision.transform.position - transform.position;
+            repulsionDirection.Normalize();
+            float repulsionForce = 800f;
+            plyrRb.AddForce(repulsionDirection * repulsionForce);
         }
     }
 
