@@ -5,6 +5,8 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     public string AcceptedTag = "box";
+    public bool Activated;
+    public bool Inverted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +22,9 @@ public class Button : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
-        //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (coll.gameObject.tag == AcceptedTag)
         {
-            //If the GameObject has the same tag as specified, output this message in the console
-            Debug.Log("Do something here");
+            Activated = !Inverted;
         }
     }
 
@@ -33,8 +33,7 @@ public class Button : MonoBehaviour
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (coll.gameObject.tag == AcceptedTag)
         {
-            //If the GameObject has the same tag as specified, output this message in the console
-            Debug.Log("Do something else here");
+            Activated = Inverted;
         }
     }
 }
