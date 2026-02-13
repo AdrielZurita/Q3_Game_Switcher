@@ -7,4 +7,6 @@ public class ObjectPlsHelp : ScriptableObject
 {
     public bool returning = false;
     public bool havedisc = true;
+    public bool inGravBox = false;
+    public bool isPositive = true;
 }

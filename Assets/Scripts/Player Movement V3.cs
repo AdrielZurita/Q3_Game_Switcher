@@ -12,9 +12,12 @@ public class PlayerMovementV3 : MonoBehaviour
     public float airMult;
     bool readyToJump = true;
     public float jumpGravity;
+    public float sprintSpeedMultiplier = 1.2f;
+    private float tempSpeed;
     [Header("ground check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public float heightCheckOffset = 0.2f;
     bool grounded;
     [Header("orientation")]
     public Transform orientation; 
@@ -31,7 +34,7 @@ public class PlayerMovementV3 : MonoBehaviour
 
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.localPosition, -transform.up, playerHeight * 0.5f + heightCheckOffset, whatIsGround);
         
         MyInput();
         SpeedControl();
@@ -56,11 +59,20 @@ public class PlayerMovementV3 : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(KeyCode.Space) && readyToJump)
+        if(Input.GetKey(KeyCode.Space) && readyToJump && grounded)
         {
             Jump();
             readyToJump = false;
             Invoke(nameof(ResetJump), jumpCoolDown);
+        }
+
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            tempSpeed = moveSpeed * sprintSpeedMultiplier;
+        }
+        else
+        {
+            tempSpeed = moveSpeed;
         }
     }
 
@@ -70,12 +82,12 @@ public class PlayerMovementV3 : MonoBehaviour
         
         if(grounded)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * tempSpeed * 10f, ForceMode.Force);
         }
         else
         {
             rb.AddForce(transform.up * jumpGravity, ForceMode.Impulse);
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMult, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * tempSpeed * 10f * airMult, ForceMode.Force);
         }
     }
 
@@ -83,9 +95,9 @@ public class PlayerMovementV3 : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        if(flatVel.magnitude > moveSpeed)
+        if(flatVel.magnitude > tempSpeed)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            Vector3 limitedVel = flatVel.normalized * tempSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }

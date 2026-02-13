@@ -4,27 +4,62 @@ using UnityEngine;
 
 public class GravChanger : MonoBehaviour
 {
-    public Vector3 gravityDirection = new Vector3(-1, 0, 0);
-    public float gravityMagnitude = 9.81f;
     private Rigidbody plyrRb;
     private Transform boxTransform;
+    private Transform playerTransform;
+    public ObjectPlsHelp objectPlsHelp;
+
     void Start()
     {
         plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         boxTransform = this.transform;
-        this.transform.LookAt(this.transform.position + gravityDirection);
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider collision)
     {
-        if (other.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == true)
         {
-            plyrRb.AddForce(gravityDirection.normalized * gravityMagnitude * plyrRb.mass, ForceMode.Acceleration);
+            playerTransform.rotation = this.transform.rotation;
+            objectPlsHelp.inGravBox = true;
         }
+        else if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == false)
+        {
+            Vector3 repulsionDirection = collision.transform.position - transform.position;
+            repulsionDirection.Normalize();
+            float repulsionForce = 800f;
+            plyrRb.AddForce(repulsionDirection * repulsionForce);
+        }
+    }
+    void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == true)
+        {
+            objectPlsHelp.inGravBox = false;
+            playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
+    void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == false)
+        {
+            Vector3 repulsionDirection = collision.transform.position - transform.position;
+            repulsionDirection.Normalize();
+            float repulsionForce = 800f;
+            plyrRb.AddForce(repulsionDirection * repulsionForce);
+        }
+    }
+
+    public void FaceTowardsWall(RaycastHit hit)
+    {
+        Vector3 targetDirection = Vector3.zero;
+        targetDirection = hit.point - transform.position;
+        transform.rotation = Quaternion.LookRotation(-hit.normal, transform.up);
     }
 }
