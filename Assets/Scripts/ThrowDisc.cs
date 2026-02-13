@@ -35,7 +35,18 @@ public class ThrowDisc : MonoBehaviour
             GameObject gravBox = GameObject.FindWithTag("GravBox");
             if (gravBox != null)
             {
+                GravChanger gravChanger = gravBox.GetComponent<GravChanger>();
+                if (gravChanger.objectInBox != null)
+                {
+                    Transform boxParent = gravChanger.objectInBox.transform.parent;
+                    Transform boxCtrl = boxParent.Find("Box Grav controller");
+                    if (boxCtrl != null)
+                    {
+                        boxCtrl.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                }
                 Transform boxTrn = gravBox.transform;
+                objectPlsHelp.inGravBox = false;
                 GameObject discA = Instantiate(discObj, boxTrn.position, boxTrn.rotation);
                 Destroy(gravBox);
             }

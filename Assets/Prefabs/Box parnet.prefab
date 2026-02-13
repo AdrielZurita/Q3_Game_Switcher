@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2733769584392442572}
   - component: {fileID: 475880336187157547}
   - component: {fileID: 6716890473947997652}
-  - component: {fileID: 3854074295694866582}
+  - component: {fileID: 3231646249180275649}
   m_Layer: 20
   m_Name: Box
   m_TagString: box
@@ -108,7 +108,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3854074295694866582
+--- !u!54 &3231646249180275649
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,10 +130,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &3447732258952124651
 GameObject:
@@ -144,7 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3429823882933702503}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Box parnet
   m_TagString: box
   m_Icon: {fileID: 0}
@@ -164,8 +164,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2752552002715822935}
   - {fileID: 3326176793280016235}
+  - {fileID: 2752552002715822935}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3864612878845956459
@@ -218,3 +218,6 @@ MonoBehaviour:
   jumpGravity: -0.6
   doFunnyStuff: 0
   grabbingScript: {fileID: 0}
+  boxObj: {fileID: 2527995748521361947}
+  boxParent: {fileID: 3447732258952124651}
+  boxGravObj: {fileID: 3864612878845956459}

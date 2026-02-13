@@ -9,6 +9,7 @@ TagManager:
   - GravBox
   - CantWall
   - box
+  - boxGrav
   layers:
   - Default
   - TransparentFX

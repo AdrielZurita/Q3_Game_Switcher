@@ -8,6 +8,7 @@ public class GravChanger : MonoBehaviour
     private Transform boxTransform;
     private Transform playerTransform;
     public ObjectPlsHelp objectPlsHelp;
+    public GameObject objectInBox;
 
     void Start()
     {
@@ -38,7 +39,18 @@ public class GravChanger : MonoBehaviour
 
         if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
         {
-            collision.gameObject.transform.rotation = this.transform.rotation;
+            objectInBox = collision.gameObject;
+            Transform boxParent = collision.gameObject.transform.parent;
+            Transform boxCtrl = boxParent.Find("Box Grav controller");
+            if (boxCtrl != null)
+            {
+                boxCtrl.rotation = this.transform.rotation;
+            }
+            else
+            {
+                Debug.LogWarning("Child 'Box Grav controller' not found on " + collision.gameObject.name, collision.gameObject);
+                collision.gameObject.transform.rotation = this.transform.rotation;
+            }
         }
         else if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
         {
@@ -62,7 +74,17 @@ public class GravChanger : MonoBehaviour
 
         if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
         {
-            collision.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            Transform boxParent = collision.gameObject.transform.parent;
+            Transform boxCtrl = boxParent.Find("Box Grav controller");
+            if (boxCtrl != null)
+            {
+                boxCtrl.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                Debug.LogWarning("Child 'Box Grav controller' not found on " + collision.gameObject.name, collision.gameObject);
+                collision.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 
