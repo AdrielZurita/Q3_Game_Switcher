@@ -9,6 +9,7 @@ public class GravChanger : MonoBehaviour
     private Transform playerTransform;
     public ObjectPlsHelp objectPlsHelp;
     public GameObject objectInBox;
+    public float rotationSpeed = 200f;
 
     void Start()
     {
@@ -26,7 +27,6 @@ public class GravChanger : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == true)
         {
-            playerTransform.rotation = this.transform.rotation;
             objectPlsHelp.inGravBox = true;
         }
         else if (collision.gameObject.tag == "Player" && objectPlsHelp.isPositive == false)
@@ -106,6 +106,13 @@ public class GravChanger : MonoBehaviour
             if (boxRb != null)
             {
                 boxRb.AddForce(repulsionDirection * repulsionForce);
+            }
+        }
+        if (collision.gameObject.tag == "Player" && objectPlsHelp.inGravBox)
+        {
+            if (playerTransform.rotation != this.boxTransform.rotation)
+            {
+                playerTransform.rotation = Quaternion.RotateTowards(playerTransform.rotation, this.boxTransform.rotation, rotationSpeed * Time.deltaTime);
             }
         }
     }
