@@ -31,23 +31,41 @@ public class DiscHandler : MonoBehaviour
             ContactPoint contact = collision.contacts[0];
             newGravityDirection = -contact.normal;
 
-            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, contact.normal);
+            // Use the contact normal as the 'up' for the spawned box to remove unpredictable rolls.
+            Vector3 up = contact.normal.normalized;
+
+            // Choose a stable forward vector by projecting a preferred reference onto the plane.
+            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, up);
             if (forwardOnPlane.sqrMagnitude < 0.0001f)
             {
-                forwardOnPlane = Vector3.Cross(contact.normal, transform.right);
+                // fallback to transform.right if forward is nearly parallel to the normal
+                forwardOnPlane = Vector3.ProjectOnPlane(transform.right, up);
                 if (forwardOnPlane.sqrMagnitude < 0.0001f)
                 {
-                    forwardOnPlane = Vector3.Cross(contact.normal, Vector3.up);
+                    // final fallback to world forward
+                    forwardOnPlane = Vector3.ProjectOnPlane(Vector3.forward, up);
                 }
             }
             forwardOnPlane.Normalize();
 
-            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, -newGravityDirection);
-            Vector3 spawnPosition = contact.point + contact.normal * spawnOffset;
+            // LookRotation(forward, up) produces a deterministic rotation with 'up' aligned to surface normal
+            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, up);
+            Vector3 spawnPosition = contact.point + up * spawnOffset;
 
             if (GameObject.FindWithTag("GravBox") == null)
             {
-                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
+                // Compute a rotation that aligns the prefab's local axes to the desired surface axes.
+                // This compensates for any rotation baked into the prefab so the spawned box
+                // will have its local up aligned to the surface normal and its local forward
+                // aligned to the chosen forward direction on the plane.
+                Vector3 upWards = contact.normal.normalized;
+                Quaternion targetRotation = spawnRotation; // LookRotation(forwardOnPlane, up)
+
+                // Prefab's authored world rotation (may include offsets). Use inverse to cancel it.
+                Quaternion prefabRot = gravBoxObj.transform.rotation;
+                Quaternion finalRotation = targetRotation * Quaternion.Inverse(prefabRot);
+
+                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, finalRotation);
 
                 Collider boxCol = gravBox.GetComponent<Collider>();
                 if (boxCol != null)
@@ -71,7 +89,6 @@ public class DiscHandler : MonoBehaviour
                         }
 
                         if (!overlapping) break;
-
                         gravBox.transform.position += contact.normal * step;
                         Physics.SyncTransforms();
                     }
