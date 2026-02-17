@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
+  objectInBox: {fileID: 0}
+  rotationSpeed: 450
 --- !u!54 &-7244576292357789201
 Rigidbody:
   m_ObjectHideFlags: 0

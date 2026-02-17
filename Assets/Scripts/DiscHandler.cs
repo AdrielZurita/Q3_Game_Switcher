@@ -42,12 +42,40 @@ public class DiscHandler : MonoBehaviour
             }
             forwardOnPlane.Normalize();
 
-            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, contact.normal);
+            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, -newGravityDirection);
             Vector3 spawnPosition = contact.point + contact.normal * spawnOffset;
 
             if (GameObject.FindWithTag("GravBox") == null)
             {
                 GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
+
+                Collider boxCol = gravBox.GetComponent<Collider>();
+                if (boxCol != null)
+                {
+                    const int maxAttempts = 12;
+                    const float step = 0.05f;
+                    Physics.SyncTransforms();
+                    for (int i = 0; i < maxAttempts; i++)
+                    {
+                        Vector3 center = boxCol.bounds.center;
+                        Vector3 halfExtents = boxCol.bounds.extents * 0.98f;
+                        Collider[] hits = Physics.OverlapBox(center, halfExtents, gravBox.transform.rotation, ~0, QueryTriggerInteraction.Ignore);
+                        bool overlapping = false;
+                        foreach (var hit in hits)
+                        {
+                            if (hit != boxCol && !hit.transform.IsChildOf(gravBox.transform))
+                            {
+                                overlapping = true;
+                                break;
+                            }
+                        }
+
+                        if (!overlapping) break;
+
+                        gravBox.transform.position += contact.normal * step;
+                        Physics.SyncTransforms();
+                    }
+                }
             }
             Destroy(this.gameObject);
         }
