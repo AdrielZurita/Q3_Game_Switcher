@@ -10,9 +10,11 @@ public class GravChanger : MonoBehaviour
     public ObjectPlsHelp objectPlsHelp;
     public GameObject objectInBox;
     public float rotationSpeed = 200f;
+    public float repulsionForce = 800f;
 
     void Start()
     {
+        repulsionForce = objectPlsHelp.bounciness;
         plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         boxTransform = this.transform;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,7 +35,6 @@ public class GravChanger : MonoBehaviour
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
-            float repulsionForce = 800f;
             plyrRb.AddForce(repulsionDirection * repulsionForce);
         }
 
@@ -56,7 +57,6 @@ public class GravChanger : MonoBehaviour
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
-            float repulsionForce = 800f;
             Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
             if (boxRb != null)
             {
@@ -94,14 +94,12 @@ public class GravChanger : MonoBehaviour
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
-            float repulsionForce = 800f;
             plyrRb.AddForce(repulsionDirection * repulsionForce);
         }
         if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
-            float repulsionForce = 800f;
             Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
             if (boxRb != null)
             {

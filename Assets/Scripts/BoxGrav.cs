@@ -11,7 +11,8 @@ public class BoxGrav : MonoBehaviour
     public float jumpGravity;
     Rigidbody rb;
     public bool doFunnyStuff = false;
-    public Grabbing grabbingScript;
+    GameObject playerParent;
+    Grabbing grabbingScript;
     public GameObject boxObj;
     public GameObject boxParent;
     public GameObject boxGravObj;
@@ -20,7 +21,9 @@ public class BoxGrav : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerParent = GameObject.FindWithTag("Player");
         rb = boxObj.GetComponent<Rigidbody>();
+        grabbingScript = playerParent.GetComponent<Grabbing>();
         if (doFunnyStuff == false)
         {
             rb.freezeRotation = true;
