@@ -30,25 +30,24 @@ public class DiscHandler : MonoBehaviour
         {
             ContactPoint contact = collision.contacts[0];
             newGravityDirection = -contact.normal;
-
-            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, contact.normal);
+            Vector3 up = contact.normal.normalized;
+            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, up);
             if (forwardOnPlane.sqrMagnitude < 0.0001f)
             {
-                forwardOnPlane = Vector3.Cross(contact.normal, transform.right);
+                forwardOnPlane = Vector3.ProjectOnPlane(transform.right, up);
                 if (forwardOnPlane.sqrMagnitude < 0.0001f)
                 {
-                    forwardOnPlane = Vector3.Cross(contact.normal, Vector3.up);
+                    forwardOnPlane = Vector3.ProjectOnPlane(Vector3.forward, up);
                 }
             }
             forwardOnPlane.Normalize();
-
-            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, -newGravityDirection);
-            Vector3 spawnPosition = contact.point + contact.normal * spawnOffset;
+            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, up);
+            Vector3 spawnPosition = contact.point + up * spawnOffset;
 
             if (GameObject.FindWithTag("GravBox") == null)
             {
-                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
-
+                Quaternion finalRotation = spawnRotation;
+                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, finalRotation);
                 Collider boxCol = gravBox.GetComponent<Collider>();
                 if (boxCol != null)
                 {
@@ -71,7 +70,6 @@ public class DiscHandler : MonoBehaviour
                         }
 
                         if (!overlapping) break;
-
                         gravBox.transform.position += contact.normal * step;
                         Physics.SyncTransforms();
                     }
