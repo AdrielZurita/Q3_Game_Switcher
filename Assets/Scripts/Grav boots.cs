@@ -35,19 +35,19 @@ public class Gravboots : MonoBehaviour
         }*/
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {   
-        if (other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
-        {
-            isAvailable = true;
-        }
-        else
+        if (other.gameObject.GetComponent<ObjectDataHolding>() == null || !other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
         {
             isAvailable = false;
+        }
+        else if (other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
+        {
+            isAvailable = true;
         }   
     }
 
-    void OnTriggerExit(Collider other)
+    void OnCollisionExit(Collision other)
     {
         isAvailable = false;
     }
