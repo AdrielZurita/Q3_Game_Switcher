@@ -43,10 +43,10 @@ public class DiscHandler : MonoBehaviour
             forwardOnPlane.Normalize();
             Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, up);
             Vector3 spawnPosition = contact.point + up * spawnOffset;
-
             if (GameObject.FindWithTag("GravBox") == null)
             {
-                Quaternion finalRotation = spawnRotation;
+                // Align gravity box up vector with surface normal for consistent rotation
+                Quaternion finalRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
                 GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, finalRotation);
                 Collider boxCol = gravBox.GetComponent<Collider>();
                 if (boxCol != null)

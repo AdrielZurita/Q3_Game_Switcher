@@ -9,5 +9,6 @@ public class ObjectPlsHelp : ScriptableObject
     public bool havedisc = true;
     public bool inGravBox = false;
     public bool isPositive = true;
-    public float bounciness = 1f;
+    public float bounciness = 200f;
+    public float chargeAmount = 0f;
 }

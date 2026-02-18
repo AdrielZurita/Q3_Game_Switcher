@@ -35,7 +35,7 @@ public class GravChanger : MonoBehaviour
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
-            plyrRb.AddForce(repulsionDirection * repulsionForce);
+            plyrRb.AddForce(repulsionDirection * repulsionForce * objectPlsHelp.chargeAmount);
         }
 
         if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
@@ -94,7 +94,8 @@ public class GravChanger : MonoBehaviour
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
-            plyrRb.AddForce(repulsionDirection * repulsionForce);
+            plyrRb.AddForce(repulsionDirection * repulsionForce * objectPlsHelp.chargeAmount);
+            objectPlsHelp.chargeAmount -= 10f * Time.deltaTime;
         }
         if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
         {
