@@ -11,4 +11,5 @@ public class ObjectPlsHelp : ScriptableObject
     public bool isPositive = true;
     public float bounciness = 200f;
     public float chargeAmount = 0f;
+    public float playerHealth = 100f;
 }

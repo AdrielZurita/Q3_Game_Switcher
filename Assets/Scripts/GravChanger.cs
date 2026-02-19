@@ -11,13 +11,23 @@ public class GravChanger : MonoBehaviour
     public GameObject objectInBox;
     public float rotationSpeed = 200f;
     public float repulsionForce = 800f;
+    public LayerMask physObjectLayer;
+    // track affected controllers so we can reset them if this GravChanger is destroyed
+    private List<Transform> trackedControllers = new List<Transform>();
 
     void Start()
     {
-        repulsionForce = objectPlsHelp.bounciness;
-        plyrRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        if (objectPlsHelp != null)
+        {
+            repulsionForce = objectPlsHelp.bounciness;
+        }
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            plyrRb = playerObj.GetComponent<Rigidbody>();
+            playerTransform = playerObj.transform;
+        }
         boxTransform = this.transform;
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
@@ -37,30 +47,35 @@ public class GravChanger : MonoBehaviour
             repulsionDirection.Normalize();
             plyrRb.AddForce(repulsionDirection * repulsionForce * objectPlsHelp.chargeAmount);
         }
-
-        if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
+        // Handle physical objects (boxes, turrets, etc.) by layer mask
+        if ((physObjectLayer.value & (1 << collision.gameObject.layer)) != 0)
         {
-            objectInBox = collision.gameObject;
-            Transform boxParent = collision.gameObject.transform.parent;
-            Transform boxCtrl = boxParent.Find("Box Grav controller");
-            if (boxCtrl != null)
+            if (objectPlsHelp != null && objectPlsHelp.isPositive)
             {
-                boxCtrl.rotation = this.transform.rotation;
+                Transform ctrl = FindControllerTransform(collision.transform);
+                if (ctrl != null)
+                {
+                    ctrl.rotation = this.transform.rotation;
+                    if (!trackedControllers.Contains(ctrl)) trackedControllers.Add(ctrl);
+                }
+                else
+                {
+                    collision.gameObject.transform.rotation = this.transform.rotation;
+                    if (!trackedControllers.Contains(collision.transform)) trackedControllers.Add(collision.transform);
+                }
+                // keep compatibility: store one object reference
+                objectInBox = collision.gameObject;
             }
             else
             {
-                Debug.LogWarning("Child 'Box Grav controller' not found on " + collision.gameObject.name, collision.gameObject);
-                collision.gameObject.transform.rotation = this.transform.rotation;
-            }
-        }
-        else if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
-        {
-            Vector3 repulsionDirection = collision.transform.position - transform.position;
-            repulsionDirection.Normalize();
-            Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
-            if (boxRb != null)
-            {
-                boxRb.AddForce(repulsionDirection * repulsionForce);
+                // negative: push physical objects away
+                Vector3 repulsionDirection = collision.transform.position - transform.position;
+                repulsionDirection.Normalize();
+                Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
+                if (boxRb != null)
+                {
+                    boxRb.AddForce(repulsionDirection * repulsionForce);
+                }
             }
         }
     }
@@ -71,19 +86,26 @@ public class GravChanger : MonoBehaviour
             objectPlsHelp.inGravBox = false;
             playerTransform.rotation = Quaternion.Euler(0, 0, 0);
         }
-
-        if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == true)
+        if ((physObjectLayer.value & (1 << collision.gameObject.layer)) != 0 && objectPlsHelp != null && objectPlsHelp.isPositive)
         {
-            Transform boxParent = collision.gameObject.transform.parent;
-            Transform boxCtrl = boxParent.Find("Box Grav controller");
-            if (boxCtrl != null)
+            Transform ctrl = FindControllerTransform(collision.transform);
+            if (ctrl != null)
             {
-                boxCtrl.rotation = Quaternion.Euler(0, 0, 0);
+                ctrl.rotation = Quaternion.Euler(0, 0, 0);
+                trackedControllers.Remove(ctrl);
             }
             else
             {
-                Debug.LogWarning("Child 'Box Grav controller' not found on " + collision.gameObject.name, collision.gameObject);
                 collision.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                trackedControllers.Remove(collision.transform);
+            }
+            // attempt to re-enable physics on the object
+            Rigidbody rb = collision.gameObject.GetComponentInParent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+                rb.useGravity = true;
+                rb.freezeRotation = false;
             }
         }
     }
@@ -97,7 +119,7 @@ public class GravChanger : MonoBehaviour
             plyrRb.AddForce(repulsionDirection * repulsionForce * objectPlsHelp.chargeAmount);
             objectPlsHelp.chargeAmount -= 10f * Time.deltaTime;
         }
-        if (collision.gameObject.tag == "box" && objectPlsHelp.isPositive == false)
+        if ((physObjectLayer.value & (1 << collision.gameObject.layer)) != 0 && objectPlsHelp != null && objectPlsHelp.isPositive == false)
         {
             Vector3 repulsionDirection = collision.transform.position - transform.position;
             repulsionDirection.Normalize();
@@ -114,6 +136,55 @@ public class GravChanger : MonoBehaviour
                 playerTransform.rotation = Quaternion.RotateTowards(playerTransform.rotation, this.boxTransform.rotation, rotationSpeed * Time.deltaTime);
             }
         }
+    }
+
+    private Transform FindControllerTransform(Transform t)
+    {
+        if (t == null) return null;
+        // try immediate children
+        Transform ctrl = t.Find("Box Grav controller");
+        if (ctrl != null) return ctrl;
+        ctrl = t.Find("Grav controller");
+        if (ctrl != null) return ctrl;
+        // try parent (some prefabs put the controller on the parent)
+        if (t.parent != null)
+        {
+            ctrl = t.parent.Find("Box Grav controller");
+            if (ctrl != null) return ctrl;
+            ctrl = t.parent.Find("Grav controller");
+            if (ctrl != null) return ctrl;
+        }
+        // nothing found
+        return null;
+    }
+
+    void OnDisable()
+    {
+        ResetTrackedControllers();
+    }
+
+    void OnDestroy()
+    {
+        ResetTrackedControllers();
+    }
+
+    private void ResetTrackedControllers()
+    {
+        foreach (var ctrl in trackedControllers)
+        {
+            if (ctrl == null) continue;
+            // try to reset controller rotation
+            ctrl.rotation = Quaternion.Euler(0, 0, 0);
+            // try to re-enable physics on parent object
+            Rigidbody rb = ctrl.GetComponentInParent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+                rb.useGravity = true;
+                rb.freezeRotation = false;
+            }
+        }
+        trackedControllers.Clear();
     }
 
     public void FaceTowardsWall(RaycastHit hit)
