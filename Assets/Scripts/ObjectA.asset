@@ -16,4 +16,5 @@ MonoBehaviour:
   havedisc: 1
   inGravBox: 0
   isPositive: 1
-  bounciness: 250
+  bounciness: 200
+  chargeAmount: 0
