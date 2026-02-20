@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gravboots : MonoBehaviour
 {
+    /*
     // activate key is left control
     private bool bootsActive = false;
     public ObjectPlsHelp objectPlsHelp;
@@ -55,6 +56,7 @@ public class Gravboots : MonoBehaviour
         {
             canChange = true;
         }*/
+        /*
     }
 
     void OnCollisionStay(Collision other)
@@ -76,7 +78,7 @@ public class Gravboots : MonoBehaviour
     void OnCollisionExit(Collision other)
     {
         isAvailable = false;
-    }
+    }*/
 }
 
 
