@@ -6,7 +6,7 @@ public class Gravboots : MonoBehaviour
 {
     // activate key is left control
     private bool bootsActive = false;
-    //public ObjectPlsHelp objectPlsHelp;
+    public ObjectPlsHelp objectPlsHelp;
     private bool isAvailable = false;
 
     // Start is called before the first frame update
@@ -25,6 +25,28 @@ public class Gravboots : MonoBehaviour
             print("Grav boots available: " + isAvailable);
         }
 
+        if(isAvailable)
+        {
+            if(bootsActive)
+            {
+                //transform.rotation = Quaternion.RotateTowards(transform.rotation, this.boxTransform.rotation, rotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                if(objectPlsHelp.inGravBox)
+                {
+                    print("deactivated in box");
+                    // do nothing
+                }
+                else
+                {
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), rotationSpeed * Time.deltaTime); // might rotate player backwards??
+                    print("deactivated out of box");
+                }
+            }
+        }
+
+
         /*if(objectPlsHelp.inGravBox)
         {
             canChange = false;
@@ -35,7 +57,7 @@ public class Gravboots : MonoBehaviour
         }*/
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnCollisionStay(Collision other)
     {   
         if (other.gameObject.GetComponent<ObjectDataHolding>() == null || !other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
         {
@@ -45,6 +67,10 @@ public class Gravboots : MonoBehaviour
         {
             isAvailable = true;
         }   
+        else if (other.gameObject.tag == "canWall" && isAvailable)
+        {
+            isAvailable = true;
+        }
     }
 
     void OnCollisionExit(Collision other)
@@ -52,3 +78,7 @@ public class Gravboots : MonoBehaviour
         isAvailable = false;
     }
 }
+
+
+
+

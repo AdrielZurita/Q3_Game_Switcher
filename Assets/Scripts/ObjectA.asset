@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: ObjectA
   m_EditorClassIdentifier: 
   returning: 0
-  throwDiscScript: {fileID: 0}
+  havedisc: 1
+  inGravBox: 0
+  isPositive: 1
+  bounciness: 250
