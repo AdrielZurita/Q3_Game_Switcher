@@ -338,7 +338,6 @@ GameObject:
   - component: {fileID: 164823923}
   - component: {fileID: 164823922}
   - component: {fileID: 164823924}
-  - component: {fileID: 164823925}
   m_Layer: 3
   m_Name: Player Parent
   m_TagString: Player
@@ -437,19 +436,6 @@ MonoBehaviour:
   grabRange: 4
   holdPoint: {fileID: 1551787797}
   grabbedObject: {fileID: 0}
---- !u!114 &164823925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 164823919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b082e91de348f54397b5bc2c3999aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
 --- !u!1001 &175277301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3013,6 +2999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
   polarityText: {fileID: 1581980550}
+  chargeText: {fileID: 0}
 --- !u!114 &1581980550
 MonoBehaviour:
   m_ObjectHideFlags: 0
