@@ -30,24 +30,50 @@ public class DiscHandler : MonoBehaviour
         {
             ContactPoint contact = collision.contacts[0];
             newGravityDirection = -contact.normal;
-
-            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, contact.normal);
+            Vector3 up = contact.normal.normalized;
+            Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, up);
             if (forwardOnPlane.sqrMagnitude < 0.0001f)
             {
-                forwardOnPlane = Vector3.Cross(contact.normal, transform.right);
+                forwardOnPlane = Vector3.ProjectOnPlane(transform.right, up);
                 if (forwardOnPlane.sqrMagnitude < 0.0001f)
                 {
-                    forwardOnPlane = Vector3.Cross(contact.normal, Vector3.up);
+                    forwardOnPlane = Vector3.ProjectOnPlane(Vector3.forward, up);
                 }
             }
             forwardOnPlane.Normalize();
-
-            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, contact.normal);
-            Vector3 spawnPosition = contact.point + contact.normal * spawnOffset;
-
+            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, up);
+            Vector3 spawnPosition = contact.point + up * spawnOffset;
             if (GameObject.FindWithTag("GravBox") == null)
             {
-                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, spawnRotation);
+                // Align gravity box up vector with surface normal for consistent rotation
+                Quaternion finalRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+                GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, finalRotation);
+                Collider boxCol = gravBox.GetComponent<Collider>();
+                if (boxCol != null)
+                {
+                    const int maxAttempts = 12;
+                    const float step = 0.05f;
+                    Physics.SyncTransforms();
+                    for (int i = 0; i < maxAttempts; i++)
+                    {
+                        Vector3 center = boxCol.bounds.center;
+                        Vector3 halfExtents = boxCol.bounds.extents * 0.98f;
+                        Collider[] hits = Physics.OverlapBox(center, halfExtents, gravBox.transform.rotation, ~0, QueryTriggerInteraction.Ignore);
+                        bool overlapping = false;
+                        foreach (var hit in hits)
+                        {
+                            if (hit != boxCol && !hit.transform.IsChildOf(gravBox.transform))
+                            {
+                                overlapping = true;
+                                break;
+                            }
+                        }
+
+                        if (!overlapping) break;
+                        gravBox.transform.position += contact.normal * step;
+                        Physics.SyncTransforms();
+                    }
+                }
             }
             Destroy(this.gameObject);
         }
