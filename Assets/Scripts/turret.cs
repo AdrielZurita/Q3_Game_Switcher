@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class turret : MonoBehaviour
 {
-    // to do: wait 1.5 seconds, then shoot at player consistently until they leave the aim cone child or they die. reset timer if they come back in.
     public bool playerInRange = false;
     public bool shooting = false;
     [SerializeField] ObjectPlsHelp objectPlsHelp;
@@ -72,7 +71,6 @@ public class turret : MonoBehaviour
     {
         while (playerInRange)
         {
-            // safety checks
             if (objectPlsHelp != null)
             {
                 // put shoot noise here
@@ -89,7 +87,6 @@ public class turret : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerInRange = false;
-            // stop coroutines
             if (prepCoroutine != null)
             {
                 StopCoroutine(prepCoroutine);

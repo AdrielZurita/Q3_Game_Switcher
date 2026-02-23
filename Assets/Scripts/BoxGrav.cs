@@ -26,7 +26,6 @@ public class BoxGrav : MonoBehaviour
         {
             boxObj = this.gameObject;
         }
-        // try to get a collider on the object to determine a better box height
         Collider col = null;
         if (boxObj != null)
         {
@@ -44,7 +43,6 @@ public class BoxGrav : MonoBehaviour
                 boxHeight = col.bounds.size.y;
             }
         }
-        // try to find the Rigidbody on the assigned object, its parents, or its children
         rb = boxObj.GetComponent<Rigidbody>();
         if (rb == null)
         {
@@ -68,7 +66,6 @@ public class BoxGrav : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // use the boxObj position for the ground check if available
         Vector3 origin = boxObj != null ? boxObj.transform.position : transform.position;
         grounded = Physics.Raycast(origin, -transform.up, boxHeight * 0.5f + heightCheckOffset, whatIsGround);
     }
@@ -79,12 +76,10 @@ public class BoxGrav : MonoBehaviour
             bool isGrabbed = false;
             if (grabbingScript != null && grabbingScript.grabbedObject != null)
             {
-                // compare against the actual physics object the BoxGrav controls
                 isGrabbed = grabbingScript.grabbedObject == boxObj;
             }
             if (!isGrabbed && rb != null)
             {
-                // apply force toward the local "down" direction (-transform.up)
                 rb.AddForce(-transform.up * jumpGravity, ForceMode.Impulse);
             }
         }
