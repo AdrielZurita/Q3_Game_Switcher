@@ -215,9 +215,8 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
-  jumpGravity: -0.6
+  jumpGravity: 0.6
   doFunnyStuff: 0
-  grabbingScript: {fileID: 0}
   boxObj: {fileID: 2527995748521361947}
   boxParent: {fileID: 3447732258952124651}
   boxGravObj: {fileID: 3864612878845956459}

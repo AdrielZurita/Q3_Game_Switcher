@@ -42,9 +42,8 @@ public class ThrowDisc : MonoBehaviour
                 Transform boxTrn = gravBox.transform;
                 if (objectPlsHelp.inGravBox)
                 {
-                    playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+                    objectPlsHelp.inGravBox = false;
                 }
-                objectPlsHelp.inGravBox = false;
                 GameObject discA = Instantiate(discObj, boxTrn.position, boxTrn.rotation);
                 Destroy(gravBox);
             }
@@ -57,7 +56,6 @@ public class ThrowDisc : MonoBehaviour
             objectPlsHelp.returning = true;
             if (objectPlsHelp.inGravBox)
             {
-                playerTransform.rotation = Quaternion.Euler(0, 0, 0);
                 objectPlsHelp.inGravBox = false;
             }
         }
@@ -67,10 +65,7 @@ public class ThrowDisc : MonoBehaviour
             GameObject disc = GameObject.FindWithTag("Disc");
             if (disc != null)
             {
-                // Face the player
                 disc.transform.LookAt(playerTransform.position);
-                
-                // Move kinematic body toward player (physics will detect collisions)
                 Vector3 direction = (this.transform.position - disc.transform.position).normalized;
                 disc.transform.position += direction * returnVelocity * Time.deltaTime;
                 
@@ -91,7 +86,7 @@ public class ThrowDisc : MonoBehaviour
 
         if (!objectPlsHelp.inGravBox && playerTransform.rotation != Quaternion.Euler(0, 0, 0))
         {
-            playerTransform.rotation = Quaternion.Euler(0, 0, 0);
+            playerTransform.rotation = Quaternion.RotateTowards(playerTransform.rotation, Quaternion.Euler(0, 0, 0), 150f * Time.deltaTime);
         }
     }
 }
