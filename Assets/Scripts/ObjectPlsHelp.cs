@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "ObjectA", menuName = "ObjectPlsHelp")]
 public class ObjectPlsHelp : ScriptableObject
@@ -12,4 +13,7 @@ public class ObjectPlsHelp : ScriptableObject
     public float bounciness = 200f;
     public float chargeAmount = 0f;
     public float playerHealth = 100f;
+    [SerializeField] public GameObject checkpoint;
+    [SerializeField] public Scene currentScene;
+    public bool canMove = true;
 }
