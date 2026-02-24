@@ -13,7 +13,6 @@ public class BoxGrav : MonoBehaviour
     public bool doFunnyStuff = false;
     GameObject playerParent;
     Grabbing grabbingScript;
-    public GameObject boxObj;
     public GameObject boxParent;
     public GameObject boxGravObj;
 
@@ -22,66 +21,32 @@ public class BoxGrav : MonoBehaviour
     void Start()
     {
         playerParent = GameObject.FindWithTag("Player");
-        if (boxObj == null)
+        if (playerParent != null)
         {
-            boxObj = this.gameObject;
+            grabbingScript = playerParent.GetComponent<Grabbing>();
         }
-        Collider col = null;
-        if (boxObj != null)
+        boxGravObj = this.gameObject;
+        boxParent = boxGravObj.transform.parent.gameObject;
+        if (boxParent != null)
         {
-            col = boxObj.GetComponent<Collider>();
-            if (col == null)
-            {
-                col = boxObj.GetComponentInParent<Collider>();
-            }
-            if (col == null)
-            {
-                col = boxObj.GetComponentInChildren<Collider>();
-            }
-            if (col != null)
-            {
-                boxHeight = col.bounds.size.y;
-            }
-        }
-        rb = boxObj.GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            rb = boxObj.GetComponentInParent<Rigidbody>();
-        }
-        if (rb == null)
-        {
-            rb = boxObj.GetComponentInChildren<Rigidbody>();
-        }
-        if (rb == null)
-        {
-            Debug.LogWarning("BoxGrav: no Rigidbody found on boxObj or its relatives: " + boxObj.name, boxObj);
-        }
-        grabbingScript = playerParent != null ? playerParent.GetComponent<Grabbing>() : null;
-        if (rb != null)
-        {
-            rb.freezeRotation = !doFunnyStuff;
+            rb = boxParent.GetComponentInChildren<Rigidbody>();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 origin = boxObj != null ? boxObj.transform.position : transform.position;
-        grounded = Physics.Raycast(origin, -transform.up, boxHeight * 0.5f + heightCheckOffset, whatIsGround);
+        grounded = Physics.Raycast(transform.localPosition, -transform.up, boxHeight * 0.5f + heightCheckOffset, whatIsGround);
     }
     void FixedUpdate()
     {
-        if (!grounded)
+        if(grounded)
         {
-            bool isGrabbed = false;
-            if (grabbingScript != null && grabbingScript.grabbedObject != null)
-            {
-                isGrabbed = grabbingScript.grabbedObject == boxObj;
-            }
-            if (!isGrabbed && rb != null)
-            {
-                rb.AddForce(-transform.up * jumpGravity, ForceMode.Impulse);
-            }
+            
+        }
+        else if (!grounded && grabbingScript != null && grabbingScript.grabbedObject != this.gameObject && rb != null)
+        {
+            rb.AddForce(transform.up * -jumpGravity, ForceMode.Impulse);
         }
     }
 }
