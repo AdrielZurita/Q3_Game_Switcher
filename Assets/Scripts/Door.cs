@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-
-public GameObject button;
-
+    [Header("Connect to button plate")]
+    public GameObject button;
+    [Header("preset don't touch")]
+    public Transform door;
+    public Transform closedPosition;
+    public Transform openPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +21,12 @@ public GameObject button;
     {
         if (button.GetComponent<Button>().Activated)
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z), 2f * Time.deltaTime);
-            //openinganimation here when implemented
+            door.transform.position = Vector3.MoveTowards(door.transform.position, openPosition.position, 5f * Time.deltaTime);
+            //opening animation here when implemented
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y - 5f, transform.position.z), 2f * Time.deltaTime);
+            door.transform.position = Vector3.MoveTowards(door.transform.position, closedPosition.position, 5f * Time.deltaTime);
             //closing animation here when implemented
 
         }
