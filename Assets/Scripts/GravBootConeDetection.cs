@@ -4,20 +4,71 @@ using UnityEngine;
 
 public class GravBootConeDetection : MonoBehaviour
 {
+    public bool isAvailable = false;
     private Vector3 newGravityDirection;
-    GravBootPlayerAffector handlingScript;
-    public Quaternion FinalRotation;
+    public Quaternion DecetorFinalRotation;
+    private bool bootsActive = false;
+    public ObjectPlsHelp objectPlsHelp;
+    public float rotationSpeed = 200f;
+    public Transform PlayerParent;
 
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
         
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (handlingScript.isAvailable)
+    // Update is called once per frame
+    void Update()
+    {   
+        
+        if(Input.GetKeyDown(KeyCode.LeftControl))
         {
-            ContactPoint contact = collision.contacts[0];
+            bootsActive = !bootsActive;
+            print("Grav boots active: " + bootsActive);
+            print("Grav boots available: " + isAvailable);
+            Debug.Log("Final Rotation: " + DecetorFinalRotation);
+        }
+
+        if(isAvailable)
+        {
+            if(bootsActive)
+            {
+                PlayerParent.transform.rotation = Quaternion.RotateTowards(PlayerParent.transform.rotation, DecetorFinalRotation, rotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                if(objectPlsHelp.inGravBox)
+                {
+                    // do nothing
+                }
+                else
+                {
+                    PlayerParent.transform.rotation = Quaternion.RotateTowards(PlayerParent.transform.rotation, Quaternion.Euler(0, 0, 0), rotationSpeed * Time.deltaTime); // might rotate player backwards??
+                }
+            }
+        }       
+    }
+
+    void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.GetComponent<ObjectDataHolding>() == null || !other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
+        {
+            isAvailable = false;
+        }
+        else if (other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
+        {
+            isAvailable = true;
+        }   
+        else if (other.gameObject.tag == "canWall" && isAvailable)
+        {
+            isAvailable = true;
+        }
+
+        //Debug.Log("Collision");
+        if (isAvailable)
+        {
+            ContactPoint contact = other.contacts[0];
             newGravityDirection = -contact.normal;
             Vector3 up = contact.normal.normalized;
             Vector3 forwardOnPlane = Vector3.ProjectOnPlane(transform.forward, up);
@@ -30,10 +81,13 @@ public class GravBootConeDetection : MonoBehaviour
                     }
             }
             forwardOnPlane.Normalize();
-            Quaternion spawnRotation = Quaternion.LookRotation(forwardOnPlane, up);
-            //Vector3 spawnPosition = contact.point + up * spawnOffset;
-            Quaternion finalRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            DecetorFinalRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+            print("Detector Final Rotation: " + DecetorFinalRotation);
         }
-        
+    }
+
+    void OnCollisionExit(Collision other)
+    {
+        isAvailable = false;
     }
 }
