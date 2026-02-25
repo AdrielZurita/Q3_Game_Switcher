@@ -11,6 +11,7 @@ TagManager:
   - box
   - boxGrav
   - turret
+  - grapplePart
   layers:
   - Default
   - TransparentFX

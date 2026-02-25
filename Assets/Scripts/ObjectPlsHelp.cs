@@ -13,7 +13,7 @@ public class ObjectPlsHelp : ScriptableObject
     public float bounciness = 200f;
     public float chargeAmount = 0f;
     public float playerHealth = 100f;
-    [SerializeField] public GameObject checkpoint;
-    [SerializeField] public Scene currentScene;
+    public float maxHealth = 100f;
     public bool canMove = true;
+    public bool canThrow = true;
 }

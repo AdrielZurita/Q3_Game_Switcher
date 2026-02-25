@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class checkpoint : MonoBehaviour
 {
-    public ObjectPlsHelp objectPlsHelp;
-
-    // Start is called before the first frame update
-    void Start()
+    private bool activated = false;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        if (other.CompareTag("Player") && !activated)
         {
-            objectPlsHelp.checkpoint = this.gameObject;
+            respawnManager.UpdateCheckpoint(transform.position);
+            activated = true;
         }
     }
 }

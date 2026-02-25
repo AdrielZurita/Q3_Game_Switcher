@@ -15,16 +15,17 @@ public class ThrowDisc : MonoBehaviour
         objectPlsHelp.returning = false;
         objectPlsHelp.inGravBox = false;
         objectPlsHelp.isPositive = true;
+        objectPlsHelp.canThrow = true;
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == true)
+        if (Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == true && objectPlsHelp.canThrow)
         {
             GameObject disc = Instantiate(discObj, transform.position, transform.rotation);
             disc.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, throwVelocity, 0));
             objectPlsHelp.havedisc = false;
         }
-        else if ((Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == false) || (GameObject.FindWithTag("Disc") != null && (Mathf.Abs(GameObject.FindWithTag("Disc").transform.position.x - transform.position.x) > 50f || Mathf.Abs(GameObject.FindWithTag("Disc").transform.position.z - transform.position.z) > 50f)) || objectPlsHelp.returning == true)
+        else if ((Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == false && objectPlsHelp.canThrow) || (GameObject.FindWithTag("Disc") != null && (Mathf.Abs(GameObject.FindWithTag("Disc").transform.position.x - transform.position.x) > 50f || Mathf.Abs(GameObject.FindWithTag("Disc").transform.position.z - transform.position.z) > 50f)) || objectPlsHelp.returning == true)
         {
             GameObject gravBox = GameObject.FindWithTag("GravBox");
             if (gravBox != null)

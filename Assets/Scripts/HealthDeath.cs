@@ -66,6 +66,6 @@ public class HealthDeath : MonoBehaviour
             yield return null;
         }
         fadeCanvasGroup.alpha = 1;
-        // reload scene here and move to checkpoint
+        Object.FindFirstObjectByType<respawnManager>().RespawnPlayer();
     }
 }
