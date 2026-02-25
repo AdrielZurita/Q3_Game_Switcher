@@ -7,7 +7,7 @@ public class HealthDeath : MonoBehaviour
     [SerializeField] ObjectPlsHelp objectPlsHelp;
     public float maxHealth = 100f;
     public float regenRate = 5f;
-    bool isDead = false;
+    public bool isDead = false;
     [Header("Damage/regen")]
     public float damageGracePeriod = 1.0f;
     private float lastDamageTime = -999f;
@@ -30,6 +30,7 @@ public class HealthDeath : MonoBehaviour
         {
             prevHealth = objectPlsHelp.playerHealth;
         }
+        objectPlsHelp.playerHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -41,6 +42,7 @@ public class HealthDeath : MonoBehaviour
         {
             isDead = true;
             objectPlsHelp.canMove = false;
+            objectPlsHelp.canThrow = false;
             StartCoroutine(FadeOut());
         }
         if (prevHealth < 0f) prevHealth = objectPlsHelp.playerHealth;
