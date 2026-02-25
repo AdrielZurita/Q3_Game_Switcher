@@ -6,11 +6,12 @@ public class turret : MonoBehaviour
 {
     public bool playerInRange = false;
     public bool shooting = false;
-    [SerializeField] ObjectPlsHelp objectPlsHelp;
+    public ObjectPlsHelp objectPlsHelp;
     [Header("Shooting")]
     public float damageAmount = 10f;
     public float prepTime = 1.5f;
     public float fireInterval = 0.5f;
+    private GameObject player;
 
     Coroutine prepCoroutine;
     Coroutine shootCoroutine;
@@ -20,14 +21,7 @@ public class turret : MonoBehaviour
     {
         playerInRange = false;
         shooting = false;
-        if (objectPlsHelp == null)
-        {
-            var player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                objectPlsHelp = player.GetComponent<ObjectPlsHelp>();
-            }
-        }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -73,8 +67,16 @@ public class turret : MonoBehaviour
         {
             if (objectPlsHelp != null)
             {
-                // put shoot noise here
-                objectPlsHelp.playerHealth -= damageAmount;
+                Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+                Ray ray = new Ray(transform.position, directionToPlayer);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100f))
+                {
+                    if (hit.collider.gameObject.tag == "Player")
+                    {
+                        objectPlsHelp.playerHealth -= damageAmount;
+                    }
+                }
             }
             yield return new WaitForSeconds(fireInterval);
         }
