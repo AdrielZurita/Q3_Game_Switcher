@@ -12,6 +12,9 @@ public class HealthDeath : MonoBehaviour
     public float damageGracePeriod = 1.0f;
     private float lastDamageTime = -999f;
     private float prevHealth = -1f;
+    public CanvasGroup fadeCanvasGroup;
+    public float fadeDuration = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,26 +36,18 @@ public class HealthDeath : MonoBehaviour
     void Update()
     {
         if (objectPlsHelp == null) return;
-
-        // clamp health
         objectPlsHelp.playerHealth = Mathf.Clamp(objectPlsHelp.playerHealth, 0f, maxHealth);
-
-        // death handling (only once)
         if (!isDead && objectPlsHelp.playerHealth <= 0f)
         {
             isDead = true;
-            // put death stuff here
-            Debug.Log("Player has died.");
+            objectPlsHelp.canMove = false;
+            StartCoroutine(FadeOut());
         }
-
-        // detect recent damage (compare previous frame health)
         if (prevHealth < 0f) prevHealth = objectPlsHelp.playerHealth;
         if (objectPlsHelp.playerHealth < prevHealth)
         {
             lastDamageTime = Time.time;
         }
-
-        // passive regen when alive and not recently damaged
         if (!isDead && objectPlsHelp.playerHealth < maxHealth && Time.time - lastDamageTime > damageGracePeriod)
         {
             objectPlsHelp.playerHealth += regenRate * Time.deltaTime;
@@ -60,5 +55,17 @@ public class HealthDeath : MonoBehaviour
         }
 
         prevHealth = objectPlsHelp.playerHealth;
+    }
+    IEnumerator FadeOut()
+    {
+        float timer = 0;
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            fadeCanvasGroup.alpha = timer / fadeDuration;
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1;
+        Object.FindFirstObjectByType<respawnManager>().RespawnPlayer();
     }
 }
