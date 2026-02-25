@@ -25,11 +25,13 @@ public class PlayerMovementV3 : MonoBehaviour
     float verticalInput; 
     Vector3 moveDirection; 
     Rigidbody rb;
+    public ObjectPlsHelp objectPlsHelp;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        objectPlsHelp.canMove = true;
     }
 
     void Update()
@@ -59,7 +61,7 @@ public class PlayerMovementV3 : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(KeyCode.Space) && readyToJump && grounded)
+        if(Input.GetKey(KeyCode.Space) && readyToJump && grounded && objectPlsHelp.canMove)
         {
             Jump();
             readyToJump = false;
@@ -80,11 +82,11 @@ public class PlayerMovementV3 : MonoBehaviour
     {
         moveDirection = verticalInput * orientation.forward + horizontalInput * orientation.right;
         
-        if(grounded)
+        if(grounded && objectPlsHelp.canMove)
         {
             rb.AddForce(moveDirection.normalized * tempSpeed * 10f, ForceMode.Force);
         }
-        else
+        else if (!grounded && objectPlsHelp.canMove)
         {
             rb.AddForce(transform.up * jumpGravity, ForceMode.Impulse);
             rb.AddForce(moveDirection.normalized * tempSpeed * 10f * airMult, ForceMode.Force);

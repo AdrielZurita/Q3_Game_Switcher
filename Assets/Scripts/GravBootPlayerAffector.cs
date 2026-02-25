@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gravboots : MonoBehaviour
+public class GravBootPlayerAffector : MonoBehaviour
 {
-    /*
     // activate key is left control
     private bool bootsActive = false;
     public ObjectPlsHelp objectPlsHelp;
-    private bool isAvailable = false;
+    public bool isAvailable = false;
+    public float rotationSpeed = 200f;
+    public GravBootConeDetection GravChangingScript;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,8 @@ public class Gravboots : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        
         if(Input.GetKeyDown(KeyCode.LeftControl))
         {
             bootsActive = !bootsActive;
@@ -30,7 +32,7 @@ public class Gravboots : MonoBehaviour
         {
             if(bootsActive)
             {
-                //transform.rotation = Quaternion.RotateTowards(transform.rotation, this.boxTransform.rotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, GravChangingScript.FinalRotation, rotationSpeed * Time.deltaTime);
             }
             else
             {
@@ -45,18 +47,7 @@ public class Gravboots : MonoBehaviour
                     print("deactivated out of box");
                 }
             }
-        }
-
-
-        /*if(objectPlsHelp.inGravBox)
-        {
-            canChange = false;
-        }
-        else
-        {
-            canChange = true;
-        }*/
-        /*
+        }       
     }
 
     void OnCollisionStay(Collision other)
@@ -78,9 +69,5 @@ public class Gravboots : MonoBehaviour
     void OnCollisionExit(Collision other)
     {
         isAvailable = false;
-    }*/
+    }
 }
-
-
-
-

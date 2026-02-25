@@ -15,6 +15,8 @@ public class DiscHandler : MonoBehaviour
     public float raycastDistance = 4f;
     public float spawnOffset = 0.1f;
     private Vector3 newGravityDirection;
+    GameObject player;
+    grapple GrappleScript;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,8 @@ public class DiscHandler : MonoBehaviour
         discTransform = this.transform;
         discRigidbody = GetComponent<Rigidbody>();
         discTransform.Rotate(90f, 0f, 0f);
+        player = GameObject.FindGameObjectWithTag("Player");
+        GrappleScript = player.GetComponent<grapple>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -45,7 +49,6 @@ public class DiscHandler : MonoBehaviour
             Vector3 spawnPosition = contact.point + up * spawnOffset;
             if (GameObject.FindWithTag("GravBox") == null)
             {
-                // Align gravity box up vector with surface normal for consistent rotation
                 Quaternion finalRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
                 GameObject gravBox = Instantiate(gravBoxObj, spawnPosition, finalRotation);
                 Collider boxCol = gravBox.GetComponent<Collider>();
@@ -89,6 +92,15 @@ public class DiscHandler : MonoBehaviour
             Vector3 reflectedVelocity = Vector3.Reflect(discRigidbody.velocity, collision.contacts[0].normal);
             reflectedVelocity *= bounceDamping;
             discRigidbody.velocity = reflectedVelocity + (collision.contacts[0].normal * bounceForce);
+        }
+        if (collision.gameObject.tag == "grapplePart" && objectPlsHelp.returning == false)
+        {
+            GrappleScript.grapplePoint = collision.contacts[0].point;
+            GrappleScript.pullDirection = (GrappleScript.grapplePoint - player.transform.position).normalized;
+            objectPlsHelp.beingPulled = true;
+            objectPlsHelp.returning = false;
+            objectPlsHelp.havedisc = true;
+            Destroy(this.gameObject);
         }
     }
 }
