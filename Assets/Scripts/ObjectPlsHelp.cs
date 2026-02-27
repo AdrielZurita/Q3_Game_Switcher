@@ -1,10 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "ObjectA", menuName = "ObjectPlsHelp")]
 public class ObjectPlsHelp : ScriptableObject
 {
     public bool returning = false;
     public bool havedisc = true;
+    public bool inGravBox = false;
+    public bool isPositive = true;
+    public float bounciness = 200f;
+    public float chargeAmount = 0f;
+    public float playerHealth = 100f;
+    public float maxHealth = 100f;
+    public bool canMove = true;
+    public bool canThrow = true;
+    public bool beingPulled = false;
 }

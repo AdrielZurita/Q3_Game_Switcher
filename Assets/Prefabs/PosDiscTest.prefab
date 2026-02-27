@@ -151,3 +151,9 @@ MonoBehaviour:
   gravBoxObj: {fileID: 8694833771217494822, guid: d166d809fc5fa8d4da78162d141cbb84, type: 3}
   returning: 0
   objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
+  bounceForce: 15
+  bounceDamping: 0.8
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  raycastDistance: 4
