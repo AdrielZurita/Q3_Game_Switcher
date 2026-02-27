@@ -7,27 +7,68 @@ public class turret : MonoBehaviour
     public bool playerInRange = false;
     public bool shooting = false;
     public ObjectPlsHelp objectPlsHelp;
+
     [Header("Shooting")]
     public float damageAmount = 10f;
     public float prepTime = 1.5f;
     public float fireInterval = 0.5f;
-    private GameObject player;
+    
+    [Header("Laser Setup")]
+    public LineRenderer lineRenderer;
+    public float laserDistance = 100f;
+    public float startOffset = 0.5f;
 
+
+    private GameObject player;
     Coroutine prepCoroutine;
     Coroutine shootCoroutine;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerInRange = false;
         shooting = false;
         player = GameObject.FindGameObjectWithTag("Player");
+        if (lineRenderer != null) lineRenderer.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
+{
+    if (playerInRange && lineRenderer != null)
     {
-        
+        Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
+        Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
+
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, transform.position);
+
+        if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance))
+        {
+            lineRenderer.SetPosition(1, hit.point);
+        }
+        else
+        {
+            lineRenderer.SetPosition(1, rayOrigin + (directionToPlayer * laserDistance));
+        }
+    }
+}
+
+    void UpdateLaser()
+    {
+        lineRenderer.enabled = true; 
+        lineRenderer.SetPosition(0, transform.position); 
+
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        Ray ray = new Ray(transform.position, directionToPlayer);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, laserDistance))
+        {
+            lineRenderer.SetPosition(1, hit.point); // End at whatever we hit
+        }
+        else
+        {
+            lineRenderer.SetPosition(1, transform.position + (directionToPlayer * laserDistance));
+        }
     }
 
     void OnTriggerEnter(Collider collision)
@@ -53,7 +94,7 @@ public class turret : MonoBehaviour
 
     public IEnumerator PrepToShootAtPlayer()
     {
-        // put alert noise here
+        // Optional: Change laser color to yellow/red here to signal "Prepping"
         yield return new WaitForSeconds(prepTime);
         prepCoroutine = null;
         if (playerInRange)
@@ -61,27 +102,33 @@ public class turret : MonoBehaviour
             shooting = true;
         }
     }
+
     public IEnumerator ShootAtPlayer()
     {
-        while (playerInRange)
+    while (playerInRange)
+    {
+        if (objectPlsHelp != null)
         {
-            if (objectPlsHelp != null)
+            Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
+            Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
+
+            if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance))
             {
-                Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-                Ray ray = new Ray(transform.position, directionToPlayer);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100f))
+                if (hit.collider.CompareTag("Player"))
                 {
-                    if (hit.collider.gameObject.tag == "Player")
-                    {
-                        objectPlsHelp.playerHealth -= damageAmount;
-                    }
+                    objectPlsHelp.playerHealth -= damageAmount;
+                    Debug.Log("Direct hit on Player!");
+                }
+                else
+                {
+                    Debug.Log("Laser blocked by: " + hit.collider.name);
                 }
             }
-            yield return new WaitForSeconds(fireInterval);
         }
-        shooting = false;
-        shootCoroutine = null;
+        yield return new WaitForSeconds(fireInterval);
+    }
+    shooting = false;
+    shootCoroutine = null;
     }
 
     void OnTriggerExit(Collider collision)
@@ -89,6 +136,8 @@ public class turret : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerInRange = false;
+            if (lineRenderer != null) lineRenderer.enabled = false; // Hide laser
+
             if (prepCoroutine != null)
             {
                 StopCoroutine(prepCoroutine);
