@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GravBootConeDetection : MonoBehaviour
 {
-    public bool isAvailable = false;
+    private bool isAvailable = false;
+    public bool GravBootsUnlocked = false;
     private Vector3 newGravityDirection;
-    public Quaternion DecetorFinalRotation;
-    private bool bootsActive = false;
+    private Quaternion DecetorFinalRotation;
+    public bool bootsActive = false;
     public ObjectPlsHelp objectPlsHelp;
-    public float rotationSpeed = 200f;
+    public float rotationSpeed = 400f;
     public Transform PlayerParent;
 
     // Start is called before the first frame update
@@ -21,13 +22,17 @@ public class GravBootConeDetection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        if(objectPlsHelp.inGravBox)
+        {
+            isAvailable = true;
+        }
         
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if(Input.GetKeyDown(KeyCode.LeftControl) && GravBootsUnlocked)
         {
             bootsActive = !bootsActive;
-            print("Grav boots active: " + bootsActive);
-            print("Grav boots available: " + isAvailable);
-            Debug.Log("Final Rotation: " + DecetorFinalRotation);
+            //print("Grav boots active: " + bootsActive);
+            //print("Grav boots available: " + isAvailable);
+            //Debug.Log("Final Rotation: " + DecetorFinalRotation);
         }
 
         if(isAvailable)
@@ -82,7 +87,7 @@ public class GravBootConeDetection : MonoBehaviour
             }
             forwardOnPlane.Normalize();
             DecetorFinalRotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            print("Detector Final Rotation: " + DecetorFinalRotation);
+            //print("Detector Final Rotation: " + DecetorFinalRotation);
         }
     }
 
