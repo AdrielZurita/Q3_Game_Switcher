@@ -7,7 +7,8 @@ public class respawnManager : MonoBehaviour
     public static Vector3 lastCheckpointPos;
     private GameObject player;
     public ObjectPlsHelp objectPlsHelp;
-
+    public CanvasGroup fadeCanvasGroup;
+    public HealthDeath healthDeath;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -23,13 +24,13 @@ public class respawnManager : MonoBehaviour
         {
             player.transform.position = lastCheckpointPos;
             objectPlsHelp.playerHealth = objectPlsHelp.maxHealth;
+            healthDeath.isDead = false;
             objectPlsHelp.canMove = true;
             objectPlsHelp.havedisc = true;
             objectPlsHelp.returning = false;
             objectPlsHelp.inGravBox = false;
             objectPlsHelp.isPositive = true;
             objectPlsHelp.canThrow = true;
-            // if disc or Gravbox destroy them
             GameObject disc = GameObject.FindWithTag("Disc");
             if (disc != null)
             {
@@ -40,6 +41,7 @@ public class respawnManager : MonoBehaviour
             {
                 Destroy(gravBox);
             }
+            fadeCanvasGroup.alpha = 0;
         }
     }
 

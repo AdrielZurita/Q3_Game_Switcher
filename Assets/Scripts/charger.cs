@@ -14,9 +14,9 @@ public class charger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (objectPlsHelp.chargeAmount > 5f)
+        if (objectPlsHelp.chargeAmount > 2.5f)
         {
-            objectPlsHelp.chargeAmount = 5f;
+            objectPlsHelp.chargeAmount = 2.5f;
         }
         if (objectPlsHelp.chargeAmount < 1f)
         {

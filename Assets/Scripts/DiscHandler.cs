@@ -16,6 +16,7 @@ public class DiscHandler : MonoBehaviour
     public float spawnOffset = 0.1f;
     private Vector3 newGravityDirection;
     GameObject player;
+    grapple GrappleScript;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class DiscHandler : MonoBehaviour
         discRigidbody = GetComponent<Rigidbody>();
         discTransform.Rotate(90f, 0f, 0f);
         player = GameObject.FindGameObjectWithTag("Player");
+        GrappleScript = player.GetComponent<grapple>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -93,10 +95,11 @@ public class DiscHandler : MonoBehaviour
         }
         if (collision.gameObject.tag == "grapplePart" && objectPlsHelp.returning == false)
         {
-            // pull player until they hit the grapple point, then destroy the disc
-            Vector3 grapplePoint = collision.contacts[0].point;
-            Vector3 pullDirection = (grapplePoint - player.transform.position).normalized;
-            player.GetComponent<Rigidbody>().AddForce(pullDirection * 30f, ForceMode.Impulse);
+            GrappleScript.grapplePoint = collision.contacts[0].point;
+            GrappleScript.pullDirection = (GrappleScript.grapplePoint - player.transform.position).normalized;
+            objectPlsHelp.beingPulled = true;
+            objectPlsHelp.returning = false;
+            objectPlsHelp.havedisc = true;
             Destroy(this.gameObject);
         }
     }
