@@ -13,6 +13,7 @@ public class GravBootConeDetection : MonoBehaviour
     public float rotationSpeed = 400f;
     public Transform PlayerParent;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,16 +60,19 @@ public class GravBootConeDetection : MonoBehaviour
     {
         if (other.gameObject.GetComponent<ObjectDataHolding>() == null || !other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
         {
-            isAvailable = false;
+            if (other.gameObject.tag == "canWall" && isAvailable)
+            {
+                isAvailable = true;
+            }
+            else
+            {
+                isAvailable = false;   
+            }
         }
         else if (other.gameObject.GetComponent<ObjectDataHolding>().gravBootCompatible)
         {
             isAvailable = true;
         }   
-        else if (other.gameObject.tag == "canWall" && isAvailable)
-        {
-            isAvailable = true;
-        }
 
         //Debug.Log("Collision");
         if (isAvailable)
@@ -95,4 +99,6 @@ public class GravBootConeDetection : MonoBehaviour
     {
         isAvailable = false;
     }
+
+
 }
