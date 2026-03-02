@@ -25,7 +25,7 @@ public class GravBootConeDetection : MonoBehaviour
     {   
         if(objectPlsHelp.inGravBox)
         {
-            isAvailable = true;
+            //isAvailable = true;
         }
         
         if(Input.GetKeyDown(KeyCode.LeftControl) && GravBootsUnlocked)
@@ -40,7 +40,10 @@ public class GravBootConeDetection : MonoBehaviour
         {
             if(bootsActive)
             {
-                PlayerParent.transform.rotation = Quaternion.RotateTowards(PlayerParent.transform.rotation, DecetorFinalRotation, rotationSpeed * Time.deltaTime);
+                if(!objectPlsHelp.inGravBox)
+                {
+                    PlayerParent.transform.rotation = Quaternion.RotateTowards(PlayerParent.transform.rotation, DecetorFinalRotation, rotationSpeed * Time.deltaTime);
+                }
             }
             else
             {
