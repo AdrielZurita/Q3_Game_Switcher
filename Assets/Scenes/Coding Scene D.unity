@@ -2134,7 +2134,7 @@ MonoBehaviour:
   polarityText: {fileID: 960750263}
   chargeText: {fileID: 1802911664}
   bootsState: {fileID: 1428487367}
-  gravBootConeDetection: {fileID: 0}
+  gravBootConeDetection: {fileID: 381633278}
 --- !u!114 &960750263
 MonoBehaviour:
   m_ObjectHideFlags: 0

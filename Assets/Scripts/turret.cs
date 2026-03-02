@@ -38,7 +38,7 @@ public class turret : MonoBehaviour
 {
     if (playerInRange && lineRenderer != null)
     {
-        Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
+        Vector3 rayOrigin = actualTurretObject.transform.position + (actualTurretObject.transform.forward * startOffset);
         Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
 
         lineRenderer.enabled = true;
@@ -60,8 +60,8 @@ public class turret : MonoBehaviour
         lineRenderer.enabled = true; 
         lineRenderer.SetPosition(0, actualTurretObject.transform.position); 
 
-        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position, directionToPlayer);
+        Vector3 directionToPlayer = (player.transform.position - actualTurretObject.transform.position).normalized;
+        Ray ray = new Ray(actualTurretObject.transform.position, directionToPlayer);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, laserDistance, layersToHit))
@@ -70,7 +70,7 @@ public class turret : MonoBehaviour
         }
         else
         {
-            lineRenderer.SetPosition(1, transform.position + (directionToPlayer * laserDistance));
+            lineRenderer.SetPosition(1, actualTurretObject.transform.position + (directionToPlayer * laserDistance));
         }
     }
 
@@ -111,7 +111,7 @@ public class turret : MonoBehaviour
     {
         if (objectPlsHelp != null)
         {
-            Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
+            Vector3 rayOrigin = actualTurretObject.transform.position + (actualTurretObject.transform.forward * startOffset);
             Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
 
             Debug.DrawRay(rayOrigin, directionToPlayer, Color.red, 1000f);
