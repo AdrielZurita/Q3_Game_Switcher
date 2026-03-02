@@ -388,6 +388,7 @@ MonoBehaviour:
     m_Bits: 1024
   heightCheckOffset: 0.2
   orientation: {fileID: 1452716560}
+  objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
 --- !u!54 &164823923
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3000,6 +3001,8 @@ MonoBehaviour:
   objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
   polarityText: {fileID: 1581980550}
   chargeText: {fileID: 0}
+  bootsState: {fileID: 0}
+  gravBootConeDetection: {fileID: 0}
 --- !u!114 &1581980550
 MonoBehaviour:
   m_ObjectHideFlags: 0
