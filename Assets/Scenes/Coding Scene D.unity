@@ -501,6 +501,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 06c2b42f7f7ccd44090f219d95c4440c, type: 2}
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.3443396
+      objectReference: {fileID: 0}
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0.005584717
+      objectReference: {fileID: 0}
+    - target: {fileID: 288293027032450636, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.04402692
+      objectReference: {fileID: 0}
     - target: {fileID: 544252864339747865, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.9710083
@@ -557,6 +585,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 632178673}
+    - target: {fileID: 7579633154921384615, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: m_VersionIndex
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -808,6 +840,7 @@ MonoBehaviour:
   objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
   fadeCanvasGroup: {fileID: 1839585234}
   healthDeath: {fileID: 1602474116}
+  gb: {fileID: 0}
 --- !u!4 &501338730
 Transform:
   m_ObjectHideFlags: 0
@@ -2219,6 +2252,7 @@ MonoBehaviour:
     m_Bits: 1048576
   pullForce: 10
   grabRange: 4
+  isHolding: 0
   holdPoint: {fileID: 1579093700}
   grabbedObject: {fileID: 0}
 --- !u!114 &1543310680

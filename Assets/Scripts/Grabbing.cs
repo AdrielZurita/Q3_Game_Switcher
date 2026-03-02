@@ -9,7 +9,7 @@ public class Grabbing : MonoBehaviour
     public LayerMask grabLayer;
     public float pullForce = 10f;
     public float grabRange = 5f;
-    private bool isHolding = false;
+    public bool isHolding = false;
     private bool GrabInRange;
     private Vector3 grabDirection;
     private Vector3 pullDirection;

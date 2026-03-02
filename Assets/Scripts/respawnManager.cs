@@ -9,6 +9,7 @@ public class respawnManager : MonoBehaviour
     public ObjectPlsHelp objectPlsHelp;
     public CanvasGroup fadeCanvasGroup;
     public HealthDeath healthDeath;
+    public Grabbing gb;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -41,6 +42,9 @@ public class respawnManager : MonoBehaviour
             {
                 Destroy(gravBox);
             }
+            gb.grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
+            gb.grabbedObject = null;
+            gb.isHolding = false;
             fadeCanvasGroup.alpha = 0;
         }
     }
