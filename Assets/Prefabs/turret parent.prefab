@@ -592,6 +592,9 @@ MonoBehaviour:
   lineRenderer: {fileID: 288293027032450636}
   laserDistance: 100
   startOffset: 0.5
+  layersToHit:
+    serializedVersion: 2
+    m_Bits: 1049663
 --- !u!1 &3913862713001622634
 GameObject:
   m_ObjectHideFlags: 0

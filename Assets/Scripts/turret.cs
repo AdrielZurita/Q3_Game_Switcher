@@ -64,9 +64,9 @@ public class turret : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, laserDistance, layersToHit))
-{
-    lineRenderer.SetPosition(1, hit.point);
-}
+        {
+            lineRenderer.SetPosition(1, hit.point);
+        }
         else
         {
             lineRenderer.SetPosition(1, transform.position + (directionToPlayer * laserDistance));
