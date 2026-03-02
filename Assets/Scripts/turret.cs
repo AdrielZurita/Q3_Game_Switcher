@@ -18,6 +18,8 @@ public class turret : MonoBehaviour
     public float laserDistance = 100f;
     public float startOffset = 0.5f;
 
+    public LayerMask layersToHit; 
+
 
     private GameObject player;
     Coroutine prepCoroutine;
@@ -41,7 +43,7 @@ public class turret : MonoBehaviour
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, transform.position);
 
-        if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance))
+        if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance, layersToHit))
         {
             lineRenderer.SetPosition(1, hit.point);
         }
@@ -61,10 +63,10 @@ public class turret : MonoBehaviour
         Ray ray = new Ray(transform.position, directionToPlayer);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, laserDistance))
-        {
-            lineRenderer.SetPosition(1, hit.point); // End at whatever we hit
-        }
+        if (Physics.Raycast(ray, out hit, laserDistance, layersToHit))
+{
+    lineRenderer.SetPosition(1, hit.point);
+}
         else
         {
             lineRenderer.SetPosition(1, transform.position + (directionToPlayer * laserDistance));
@@ -112,7 +114,7 @@ public class turret : MonoBehaviour
             Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
             Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
 
-            if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance))
+            if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance, layersToHit))
             {
                 if (hit.collider.CompareTag("Player"))
                 {

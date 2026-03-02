@@ -2712,6 +2712,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1997322902}
+    - target: {fileID: 3393625918914191817, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
+      propertyPath: layersToHit.m_Bits
+      value: 1049663
+      objectReference: {fileID: 0}
     - target: {fileID: 3924564245704746720, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
       propertyPath: m_Name
       value: turret parent
@@ -2726,7 +2730,7 @@ PrefabInstance:
       objectReference: {fileID: 1997322902}
     - target: {fileID: 7579633154921384615, guid: ebdd8cd921c1cae49b241abe34fffcc1, type: 3}
       propertyPath: m_VersionIndex
-      value: 33
+      value: 36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
