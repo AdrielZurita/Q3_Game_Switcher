@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 67192497}
   - component: {fileID: 67192496}
   m_Layer: 10
-  m_Name: Plane
+  m_Name: flor
   m_TagString: CanWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1894,7 +1894,7 @@ GameObject:
   - component: {fileID: 809693401}
   - component: {fileID: 809693400}
   m_Layer: 10
-  m_Name: Cube
+  m_Name: bigwall
   m_TagString: CanWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2069,7 +2069,7 @@ GameObject:
   - component: {fileID: 904456457}
   - component: {fileID: 904456456}
   m_Layer: 10
-  m_Name: Cube (2)
+  m_Name: bigwall2
   m_TagString: CanWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3440,7 +3440,7 @@ GameObject:
   - component: {fileID: 1712349101}
   - component: {fileID: 1712349100}
   m_Layer: 10
-  m_Name: Cube (3)
+  m_Name: anglewall
   m_TagString: CanWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
