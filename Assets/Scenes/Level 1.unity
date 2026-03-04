@@ -30042,6 +30042,7 @@ GameObject:
   - component: {fileID: 1034417024}
   - component: {fileID: 1034417023}
   - component: {fileID: 1034417022}
+  - component: {fileID: 1034417025}
   m_Layer: 0
   m_Name: Door1
   m_TagString: Untagged
@@ -30058,7 +30059,7 @@ Transform:
   m_GameObject: {fileID: 1034417020}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.71356833, z: -0, w: 0.70058566}
-  m_LocalPosition: {x: 0.82, y: 71.1, z: 0.019}
+  m_LocalPosition: {x: 0.766, y: 1.74, z: 0.02}
   m_LocalScale: {x: 0.09884229, y: 3.560021, z: 1.5610703}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30137,6 +30138,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034417020}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1034417025
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034417020}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0e8cd2e88d64f3d469af056bc8064371, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1036444483
 GameObject:
   m_ObjectHideFlags: 0
@@ -46511,6 +46534,7 @@ GameObject:
   - component: {fileID: 1616908807}
   - component: {fileID: 1616908806}
   - component: {fileID: 1616908805}
+  - component: {fileID: 1616908808}
   m_Layer: 0
   m_Name: Door1
   m_TagString: Untagged
@@ -46527,7 +46551,7 @@ Transform:
   m_GameObject: {fileID: 1616908803}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.71356833, z: -0, w: 0.70058566}
-  m_LocalPosition: {x: 0.82, y: 71.1, z: 0.019}
+  m_LocalPosition: {x: 0.796, y: 1.74, z: 0.02}
   m_LocalScale: {x: 0.09884229, y: 3.560021, z: 1.5610703}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46606,6 +46630,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616908803}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1616908808
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616908803}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 594d53407643e234e8faaa272e1d8ef8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1622452651
 GameObject:
   m_ObjectHideFlags: 0
@@ -48077,6 +48123,7 @@ GameObject:
   - component: {fileID: 1693654914}
   - component: {fileID: 1693654913}
   - component: {fileID: 1693654912}
+  - component: {fileID: 1693654915}
   m_Layer: 0
   m_Name: Door2
   m_TagString: Untagged
@@ -48093,7 +48140,7 @@ Transform:
   m_GameObject: {fileID: 1693654910}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.71356833, z: -0, w: 0.70058566}
-  m_LocalPosition: {x: -0.77, y: 71.1, z: 0.047}
+  m_LocalPosition: {x: -0.733, y: 1.714, z: 0.047}
   m_LocalScale: {x: 0.09884229, y: 3.560021, z: 1.5610703}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48172,6 +48219,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693654910}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1693654915
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693654910}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6ca0a5c9a8691644980ca8a46a1c84f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1695575850
 GameObject:
   m_ObjectHideFlags: 0
@@ -50305,6 +50374,7 @@ GameObject:
   - component: {fileID: 1744451609}
   - component: {fileID: 1744451608}
   - component: {fileID: 1744451607}
+  - component: {fileID: 1744451610}
   m_Layer: 0
   m_Name: Door2
   m_TagString: Untagged
@@ -50321,7 +50391,7 @@ Transform:
   m_GameObject: {fileID: 1744451605}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.71356833, z: -0, w: 0.70058566}
-  m_LocalPosition: {x: -0.77, y: 71.1, z: 0.047}
+  m_LocalPosition: {x: -0.77, y: 1.74, z: 0.047}
   m_LocalScale: {x: 0.09884229, y: 3.560021, z: 1.5610703}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50400,6 +50470,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744451605}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1744451610
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744451605}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 667fabcde6b407d469e876862b1dadaa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1748575552 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d2597d4f9e77464493ea737d8189b0c, type: 3}
