@@ -7,7 +7,9 @@ public class tempPolarity : MonoBehaviour
 {
     public ObjectPlsHelp objectPlsHelp;
     public TextMeshProUGUI polarityText;
-
+    public TextMeshProUGUI chargeText;
+    public TextMeshProUGUI bootsState;
+    public GravBootConeDetection gravBootConeDetection;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,5 +29,8 @@ public class tempPolarity : MonoBehaviour
             polarityText.text = "-";
             polarityText.color = Color.blue;
         }
+        chargeText.text = "Charge: " + objectPlsHelp.chargeAmount.ToString("F2");
+
+        bootsState.text = "Grav Boots: " + (gravBootConeDetection.bootsActive ? "ON" : "OFF");
     }
 }

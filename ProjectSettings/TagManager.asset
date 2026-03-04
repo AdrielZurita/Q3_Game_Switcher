@@ -9,6 +9,9 @@ TagManager:
   - GravBox
   - CantWall
   - box
+  - boxGrav
+  - turret
+  - grapplePart
   layers:
   - Default
   - TransparentFX
@@ -31,7 +34,7 @@ TagManager:
   - 
   - 
   - grabbable
-  - 
+  - aim
   - 
   - 
   - 

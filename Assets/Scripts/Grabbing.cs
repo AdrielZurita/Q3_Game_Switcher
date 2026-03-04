@@ -14,7 +14,7 @@ public class Grabbing : MonoBehaviour
     private Vector3 grabDirection;
     private Vector3 pullDirection;
     [SerializeField] private GameObject holdPoint;
-    [SerializeField] private GameObject grabbedObject;
+    [SerializeField] public GameObject grabbedObject;
         
     void Update()
     {
