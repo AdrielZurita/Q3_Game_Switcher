@@ -102,5 +102,9 @@ public class DiscHandler : MonoBehaviour
             objectPlsHelp.havedisc = true;
             Destroy(this.gameObject);
         }
+        if (collision.gameObject.tag != "grapplePart" && collision.gameObject.tag != "CanWall" && collision.gameObject.tag != "CantWall" && objectPlsHelp.returning == false)
+        {
+            objectPlsHelp.returning = true;
+         }
     }
 }

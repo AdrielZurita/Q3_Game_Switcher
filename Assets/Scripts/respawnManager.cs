@@ -17,6 +17,8 @@ public class respawnManager : MonoBehaviour
         {
             lastCheckpointPos = player.transform.position;
         }
+
+        gb = player.GetComponent<Grabbing>();
     }
 
     public void RespawnPlayer()
@@ -42,8 +44,11 @@ public class respawnManager : MonoBehaviour
             {
                 Destroy(gravBox);
             }
-            gb.grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
-            gb.grabbedObject = null;
+            if (gb.grabbedObject != null)
+            {
+                gb.grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
+                gb.grabbedObject = null;
+            }
             gb.isHolding = false;
             fadeCanvasGroup.alpha = 0;
         }
