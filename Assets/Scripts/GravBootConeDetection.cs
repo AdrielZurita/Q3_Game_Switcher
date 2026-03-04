@@ -12,6 +12,7 @@ public class GravBootConeDetection : MonoBehaviour
     public ObjectPlsHelp objectPlsHelp;
     public float rotationSpeed = 400f;
     public Transform PlayerParent;
+    public AudioClip switchSoundB;
 
 
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class GravBootConeDetection : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftControl) && GravBootsUnlocked)
         {
             bootsActive = !bootsActive;
+            AudioSource.PlayClipAtPoint(switchSoundB, transform.position);
             //print("Grav boots active: " + bootsActive);
             //print("Grav boots available: " + isAvailable);
             //Debug.Log("Final Rotation: " + DecetorFinalRotation);

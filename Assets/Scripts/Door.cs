@@ -6,10 +6,10 @@ public class Door : MonoBehaviour
 {
     [Header("Connect to button plate")]
     public GameObject button;
-    [Header("preset don't touch")]
-    public Transform door;
-    public Transform closedPosition;
-    public Transform openPosition;
+    public AudioClip openingSound;
+    public AudioClip closingSound;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +21,13 @@ public class Door : MonoBehaviour
     {
         if (button.GetComponent<Button>().Activated)
         {
-            door.transform.position = Vector3.MoveTowards(door.transform.position, openPosition.position, 5f * Time.deltaTime);
-            //opening animation here when implemented
+            AudioSource.PlayClipAtPoint(openingSound, transform.position);
+            //trigger opening animation here when implemented
         }
         else
         {
-            door.transform.position = Vector3.MoveTowards(door.transform.position, closedPosition.position, 5f * Time.deltaTime);
-            //closing animation here when implemented
+            AudioSource.PlayClipAtPoint(closingSound, transform.position);
+            //trigger closing animation here when implemented
 
         }
     }

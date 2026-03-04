@@ -9,6 +9,8 @@ public class ThrowDisc : MonoBehaviour
     public float returnVelocity = 30f;
     public ObjectPlsHelp objectPlsHelp;
     public Transform playerTransform;
+    public AudioClip throwSound;
+    public AudioClip switchSoundA;
     void Start()
     {
         objectPlsHelp.havedisc = true;
@@ -22,6 +24,9 @@ public class ThrowDisc : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == true && objectPlsHelp.canThrow)
         {
             GameObject disc = Instantiate(discObj, transform.position, transform.rotation);
+            AudioSource.PlayClipAtPoint(throwSound, playerTransform.position);
+            //AudioSource audio = gameObject.AddComponent<AudioSource>();
+            //audio.PlayOneShot((AudioClip)Resources.Load("grenade-launcher"));
             disc.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, throwVelocity, 0));
             objectPlsHelp.havedisc = false;
         }
@@ -82,6 +87,7 @@ public class ThrowDisc : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && objectPlsHelp.havedisc == true)
         {
             objectPlsHelp.isPositive = !objectPlsHelp.isPositive;
+            AudioSource.PlayClipAtPoint(switchSoundA, playerTransform.position);
         }
 
 
