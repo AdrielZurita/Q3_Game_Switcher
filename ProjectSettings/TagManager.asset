@@ -3,18 +3,27 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Disc
+  - CanWall
+  - GravBox
+  - CantWall
+  - box
+  - boxGrav
+  - turret
+  - grapplePart
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
   - 
   - 
   - 
+  - Ground
   - 
   - 
   - 
@@ -24,8 +33,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - grabbable
   - 
   - 
   - 
