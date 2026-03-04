@@ -3203,6 +3203,7 @@ MonoBehaviour:
   isHolding: 0
   holdPoint: {fileID: 1579093700}
   grabbedObject: {fileID: 0}
+  objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
 --- !u!114 &1543310680
 MonoBehaviour:
   m_ObjectHideFlags: 0

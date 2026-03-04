@@ -16,6 +16,13 @@ public class Grabbing : MonoBehaviour
     [SerializeField] private GameObject holdPoint;
     [SerializeField] public GameObject grabbedObject;
     public ObjectPlsHelp objectPlsHelp;
+    private Collider[] playerColliders;
+    private Collider[] grabbedColliders;
+    
+    void Start()
+    {
+        playerColliders = GetComponentsInChildren<Collider>();
+    }
         
     void Update()
     {
@@ -31,11 +38,36 @@ public class Grabbing : MonoBehaviour
                     grabbedObject = hit.transform.gameObject;
                     isHolding = true;
                     objectPlsHelp.canThrow = false;
+                    // ignore collisions between player and grabbed object
+                    if (grabbedObject != null)
+                    {
+                        grabbedColliders = grabbedObject.GetComponentsInChildren<Collider>();
+                        if (playerColliders != null && grabbedColliders != null)
+                        {
+                            foreach (var pCol in playerColliders)
+                                foreach (var gCol in grabbedColliders)
+                                    if (pCol != null && gCol != null)
+                                        Physics.IgnoreCollision(pCol, gCol, true);
+                        }
+                    }
                 }
                 else
                 {   
-                    grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
-                    grabbedObject = null;
+                    if (grabbedObject != null)
+                    {
+                        // re-enable collisions
+                        grabbedColliders = grabbedObject.GetComponentsInChildren<Collider>();
+                        if (playerColliders != null && grabbedColliders != null)
+                        {
+                            foreach (var pCol in playerColliders)
+                                foreach (var gCol in grabbedColliders)
+                                    if (pCol != null && gCol != null)
+                                        Physics.IgnoreCollision(pCol, gCol, false);
+                        }
+
+                        grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
+                        grabbedObject = null;
+                    }
                     isHolding = false;
                     objectPlsHelp.canThrow = true;
                 }
@@ -44,8 +76,21 @@ public class Grabbing : MonoBehaviour
             {
                 if(isHolding)
                 {
-                    grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
-                    grabbedObject = null;
+                    if (grabbedObject != null)
+                    {
+                        // re-enable collisions
+                        grabbedColliders = grabbedObject.GetComponentsInChildren<Collider>();
+                        if (playerColliders != null && grabbedColliders != null)
+                        {
+                            foreach (var pCol in playerColliders)
+                                foreach (var gCol in grabbedColliders)
+                                    if (pCol != null && gCol != null)
+                                        Physics.IgnoreCollision(pCol, gCol, false);
+                        }
+
+                        grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
+                        grabbedObject = null;
+                    }
                     isHolding = false;
                     objectPlsHelp.canThrow = true;
                 }
