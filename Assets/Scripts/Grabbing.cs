@@ -15,6 +15,7 @@ public class Grabbing : MonoBehaviour
     private Vector3 pullDirection;
     [SerializeField] private GameObject holdPoint;
     [SerializeField] public GameObject grabbedObject;
+    public ObjectPlsHelp objectPlsHelp;
         
     void Update()
     {
@@ -29,12 +30,14 @@ public class Grabbing : MonoBehaviour
                 {
                     grabbedObject = hit.transform.gameObject;
                     isHolding = true;
+                    objectPlsHelp.canThrow = false;
                 }
                 else
                 {   
                     grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
                     grabbedObject = null;
                     isHolding = false;
+                    objectPlsHelp.canThrow = true;
                 }
             }
             else
@@ -44,6 +47,7 @@ public class Grabbing : MonoBehaviour
                     grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
                     grabbedObject = null;
                     isHolding = false;
+                    objectPlsHelp.canThrow = true;
                 }
             }
 
