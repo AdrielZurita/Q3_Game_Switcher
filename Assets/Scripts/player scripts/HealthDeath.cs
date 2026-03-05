@@ -14,7 +14,7 @@ public class HealthDeath : MonoBehaviour
     private float prevHealth = -1f;
     public CanvasGroup fadeCanvasGroup;
     public float fadeDuration = 1f;
-
+    
     // Start is called before the first frame update
     void Start()
     {

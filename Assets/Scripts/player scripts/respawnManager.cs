@@ -9,6 +9,7 @@ public class respawnManager : MonoBehaviour
     public ObjectPlsHelp objectPlsHelp;
     public CanvasGroup fadeCanvasGroup;
     public HealthDeath healthDeath;
+    public Grabbing gb;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -16,6 +17,8 @@ public class respawnManager : MonoBehaviour
         {
             lastCheckpointPos = player.transform.position;
         }
+
+        gb = player.GetComponent<Grabbing>();
     }
 
     public void RespawnPlayer()
@@ -41,6 +44,12 @@ public class respawnManager : MonoBehaviour
             {
                 Destroy(gravBox);
             }
+            if (gb.grabbedObject != null)
+            {
+                gb.grabbedObject.GetComponent<Rigidbody>().freezeRotation = false;
+                gb.grabbedObject = null;
+            }
+            gb.isHolding = false;
             fadeCanvasGroup.alpha = 0;
         }
     }
