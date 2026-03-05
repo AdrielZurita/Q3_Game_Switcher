@@ -157,3 +157,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   raycastDistance: 4
+  spawnOffset: 0.1
+  boxSound: {fileID: 8300000, guid: 68594457b8dbab546ae1d6aa92948ec4, type: 3}
