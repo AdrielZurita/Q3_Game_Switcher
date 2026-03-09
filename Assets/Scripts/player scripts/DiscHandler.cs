@@ -17,6 +17,8 @@ public class DiscHandler : MonoBehaviour
     private Vector3 newGravityDirection;
     GameObject player;
     grapple GrappleScript;
+    public AudioClip boxSound;
+
 
     // Start is called before the first frame update
     void Start()
@@ -78,6 +80,7 @@ public class DiscHandler : MonoBehaviour
                     }
                 }
             }
+            AudioSource.PlayClipAtPoint(boxSound, player.transform.position);
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
@@ -101,6 +104,10 @@ public class DiscHandler : MonoBehaviour
             objectPlsHelp.returning = false;
             objectPlsHelp.havedisc = true;
             Destroy(this.gameObject);
+        }
+        if (collision.gameObject.tag != "grapplePart" && collision.gameObject.tag != "CanWall" && collision.gameObject.tag != "CantWall" && objectPlsHelp.returning == false)
+        {
+            objectPlsHelp.returning = true;
         }
     }
 }

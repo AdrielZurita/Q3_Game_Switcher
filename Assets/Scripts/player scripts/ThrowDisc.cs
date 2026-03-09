@@ -9,6 +9,8 @@ public class ThrowDisc : MonoBehaviour
     public float returnVelocity = 30f;
     public ObjectPlsHelp objectPlsHelp;
     public Transform playerTransform;
+    public AudioClip throwSound;
+    public AudioClip switchSoundA;
     void Start()
     {
         objectPlsHelp.havedisc = true;
@@ -22,7 +24,24 @@ public class ThrowDisc : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == true && objectPlsHelp.canThrow)
         {
             GameObject disc = Instantiate(discObj, transform.position, transform.rotation);
-            disc.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, throwVelocity, 0));
+            AudioSource.PlayClipAtPoint(throwSound, playerTransform.position);
+            Rigidbody discRb = disc.GetComponent<Rigidbody>();
+            if (discRb != null)
+            {
+                discRb.isKinematic = false;
+                discRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                discRb.AddRelativeForce(new Vector3(0, throwVelocity, 0));
+            }
+            else
+            {
+                // fallback
+                disc.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, throwVelocity, 0));
+            }
+            Collider discCol = disc.GetComponent<Collider>();
+            if (discCol != null)
+            {
+                discCol.isTrigger = false; // ensure it collides with walls while thrown
+            }
             objectPlsHelp.havedisc = false;
         }
         else if ((Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == false && objectPlsHelp.canThrow) || (GameObject.FindWithTag("Disc") != null && (Mathf.Abs(GameObject.FindWithTag("Disc").transform.position.x - transform.position.x) > 50f || Mathf.Abs(GameObject.FindWithTag("Disc").transform.position.z - transform.position.z) > 50f)) || objectPlsHelp.returning == true)
@@ -49,10 +68,19 @@ public class ThrowDisc : MonoBehaviour
                 Destroy(gravBox);
             }
             GameObject disc = GameObject.FindWithTag("Disc");
-            Rigidbody discRb = disc.GetComponent<Rigidbody>();
-            if (discRb != null)
+            if (disc != null)
             {
-                discRb.isKinematic = true;
+                Rigidbody discRb = disc.GetComponent<Rigidbody>();
+                if (discRb != null)
+                {
+                    discRb.isKinematic = true; // we'll move it manually while returning
+                    discRb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                }
+                Collider discCol = disc.GetComponent<Collider>();
+                if (discCol != null)
+                {
+                    discCol.isTrigger = true; // allow passing through walls while returning
+                }
             }
             objectPlsHelp.returning = true;
             if (objectPlsHelp.inGravBox)
@@ -82,6 +110,7 @@ public class ThrowDisc : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && objectPlsHelp.havedisc == true)
         {
             objectPlsHelp.isPositive = !objectPlsHelp.isPositive;
+            AudioSource.PlayClipAtPoint(switchSoundA, playerTransform.position);
         }
 
 
