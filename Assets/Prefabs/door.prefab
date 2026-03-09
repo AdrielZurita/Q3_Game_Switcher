@@ -48,9 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
-  door: {fileID: 6315606190860634466}
-  closedPosition: {fileID: 4971815245831482658}
-  openPosition: {fileID: 6083257142714113294}
+  openingSound: {fileID: 8300000, guid: 37fcc04c673b44c4a86e783101e556ef, type: 3}
+  closingSound: {fileID: 8300000, guid: 37fcc04c673b44c4a86e783101e556ef, type: 3}
 --- !u!1 &2938225872448173148
 GameObject:
   m_ObjectHideFlags: 0

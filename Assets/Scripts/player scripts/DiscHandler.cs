@@ -80,7 +80,7 @@ public class DiscHandler : MonoBehaviour
                     }
                 }
             }
-            AudioSource.PlayClipAtPoint(boxSound, transform.position);
+            AudioSource.PlayClipAtPoint(boxSound, player.transform.position);
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
@@ -108,6 +108,6 @@ public class DiscHandler : MonoBehaviour
         if (collision.gameObject.tag != "grapplePart" && collision.gameObject.tag != "CanWall" && collision.gameObject.tag != "CantWall" && objectPlsHelp.returning == false)
         {
             objectPlsHelp.returning = true;
-         }
+        }
     }
 }
