@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: f46f021f6f04b684f9633376130a7022
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
+  - lineRenderer: {instanceID: 0}
+  - actualTurretObject: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

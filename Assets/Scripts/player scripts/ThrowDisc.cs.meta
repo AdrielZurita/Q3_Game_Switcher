@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: 453f19b8d373d4e458ebcd5d42ff26f6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - discObj: {instanceID: 0}
+  - objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
+  - playerTransform: {instanceID: 0}
+  - throwSound: {fileID: 8300000, guid: 32bc5f62914fc6248a0f49b63e97f0d7, type: 3}
+  - switchSoundA: {fileID: 8300000, guid: 42fe9476bb6032b4aa5079b157d38922, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
