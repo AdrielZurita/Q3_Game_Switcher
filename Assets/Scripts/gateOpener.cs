@@ -26,4 +26,16 @@ public class gateOpener : MonoBehaviour
             }
         }
     }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (gateOpened)
+            {
+                leftGateAnimator.SetTrigger("Close");
+                rightGateAnimator.SetTrigger("Close");
+                gateOpened = false;
+            }
+        }
+    }
 }
