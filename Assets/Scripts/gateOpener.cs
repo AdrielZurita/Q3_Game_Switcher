@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class gateOpener : MonoBehaviour
 {
-    // right now, the opening animation automatically plays and loops. change it so that collision plays it once and never again, there are two objects that open with seperate animators
-    private Animator leftGateAnimator;
-    private Animator rightGateAnimator;
-    private bool gateOpened = false;
+    [SerializeField] private Animator leftGateAnimator;
+    [SerializeField] private Animator rightGateAnimator;
+    public bool gateOpened = false;
     void Start()
     {
-        leftGateAnimator = transform.Find("LeftGate").GetComponent<Animator>();
-        rightGateAnimator = transform.Find("RightGate").GetComponent<Animator>();
+        leftGateAnimator = this.transform.Find("LeftGate").GetComponent<Animator>();
+        rightGateAnimator = this.transform.Find("RightGate").GetComponent<Animator>();
     }
     
     void OnTriggerEnter(Collider other)
@@ -23,6 +22,18 @@ public class gateOpener : MonoBehaviour
                 leftGateAnimator.SetTrigger("Open");
                 rightGateAnimator.SetTrigger("Open");
                 gateOpened = true;
+            }
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (gateOpened)
+            {
+                leftGateAnimator.SetTrigger("Close");
+                rightGateAnimator.SetTrigger("Close");
+                gateOpened = false;
             }
         }
     }

@@ -50,7 +50,7 @@ public class ThrowDisc : MonoBehaviour
             if (gravBox != null)
             {
                 GravChanger gravChanger = gravBox.GetComponent<GravChanger>();
-                if (gravChanger.objectInBox != null)
+                if (gravChanger != null && gravChanger.objectInBox != null)
                 {
                     Transform boxParent = gravChanger.objectInBox.transform.parent;
                     Transform boxCtrl = boxParent.Find("Box Grav controller");

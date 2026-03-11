@@ -6,8 +6,8 @@ public class Door : MonoBehaviour
 {
     [Header("Connect to button plate")]
     public GameObject button;
-    public AudioClip openingSound;
-    public AudioClip closingSound;
+    //public AudioClip openingSound;
+    //public AudioClip closingSound;
 
 
     // Start is called before the first frame update
@@ -21,12 +21,12 @@ public class Door : MonoBehaviour
     {
         if (button.GetComponent<Button>().Activated)
         {
-            AudioSource.PlayClipAtPoint(openingSound, transform.position);
+            //AudioSource.PlayClipAtPoint(openingSound, transform.position);
             //trigger opening animation here when implemented
         }
         else
         {
-            AudioSource.PlayClipAtPoint(closingSound, transform.position);
+            //AudioSource.PlayClipAtPoint(closingSound, transform.position);
             //trigger closing animation here when implemented
 
         }
