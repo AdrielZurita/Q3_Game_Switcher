@@ -16667,6 +16667,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c39322423f1ec4ab6b76bc5aef7457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftGateAnimator: {fileID: 0}
+  rightGateAnimator: {fileID: 0}
+  gateOpened: 0
 --- !u!1001 &521322728
 PrefabInstance:
   m_ObjectHideFlags: 0
