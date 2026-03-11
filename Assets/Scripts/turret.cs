@@ -17,6 +17,7 @@ public class turret : MonoBehaviour
     public LineRenderer lineRenderer;
     public float laserDistance = 100f;
     public float startOffset = 0.5f;
+    public GameObject actualTurretObject;
 
     public LayerMask layersToHit; 
 
@@ -37,11 +38,11 @@ public class turret : MonoBehaviour
 {
     if (playerInRange && lineRenderer != null)
     {
-        Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
+        Vector3 rayOrigin = actualTurretObject.transform.position + (actualTurretObject.transform.forward * startOffset);
         Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
 
         lineRenderer.enabled = true;
-        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(0, actualTurretObject.transform.position);
 
         if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance, layersToHit))
         {
@@ -57,19 +58,19 @@ public class turret : MonoBehaviour
     void UpdateLaser()
     {
         lineRenderer.enabled = true; 
-        lineRenderer.SetPosition(0, transform.position); 
+        lineRenderer.SetPosition(0, actualTurretObject.transform.position); 
 
-        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        Ray ray = new Ray(transform.position, directionToPlayer);
+        Vector3 directionToPlayer = (player.transform.position - actualTurretObject.transform.position).normalized;
+        Ray ray = new Ray(actualTurretObject.transform.position, directionToPlayer);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, laserDistance, layersToHit))
-{
-    lineRenderer.SetPosition(1, hit.point);
-}
+        {
+            lineRenderer.SetPosition(1, hit.point);
+        }
         else
         {
-            lineRenderer.SetPosition(1, transform.position + (directionToPlayer * laserDistance));
+            lineRenderer.SetPosition(1, actualTurretObject.transform.position + (directionToPlayer * laserDistance));
         }
     }
 
@@ -96,7 +97,6 @@ public class turret : MonoBehaviour
 
     public IEnumerator PrepToShootAtPlayer()
     {
-        // Optional: Change laser color to yellow/red here to signal "Prepping"
         yield return new WaitForSeconds(prepTime);
         prepCoroutine = null;
         if (playerInRange)
@@ -111,9 +111,10 @@ public class turret : MonoBehaviour
     {
         if (objectPlsHelp != null)
         {
-            Vector3 rayOrigin = transform.position + (transform.forward * startOffset);
+            Vector3 rayOrigin = actualTurretObject.transform.position + (actualTurretObject.transform.forward * startOffset);
             Vector3 directionToPlayer = (player.transform.position - rayOrigin).normalized;
 
+            Debug.DrawRay(rayOrigin, directionToPlayer, Color.red, 1000f);
             if (Physics.Raycast(rayOrigin, directionToPlayer, out RaycastHit hit, laserDistance, layersToHit))
             {
                 if (hit.collider.CompareTag("Player"))
@@ -138,7 +139,7 @@ public class turret : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerInRange = false;
-            if (lineRenderer != null) lineRenderer.enabled = false; // Hide laser
+            if (lineRenderer != null) lineRenderer.enabled = false;
 
             if (prepCoroutine != null)
             {

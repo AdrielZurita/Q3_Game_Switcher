@@ -17,6 +17,9 @@ public class DiscHandler : MonoBehaviour
     private Vector3 newGravityDirection;
     GameObject player;
     grapple GrappleScript;
+    public AudioClip boxSound;
+    public Material positiveDiscMaterial;
+    public Material negativeDiscMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,15 @@ public class DiscHandler : MonoBehaviour
         discTransform.Rotate(90f, 0f, 0f);
         player = GameObject.FindGameObjectWithTag("Player");
         GrappleScript = player.GetComponent<grapple>();
+        // change material to negative disc model if ispositive false
+        if (!objectPlsHelp.isPositive)
+        {
+            GetComponent<Renderer>().material = negativeDiscMaterial;
+        }
+        else
+        {
+            GetComponent<Renderer>().material = positiveDiscMaterial;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -78,6 +90,7 @@ public class DiscHandler : MonoBehaviour
                     }
                 }
             }
+            AudioSource.PlayClipAtPoint(boxSound, player.transform.position);
             Destroy(this.gameObject);
         }
         if (collision.gameObject.tag == "Player" && objectPlsHelp.returning == true)
@@ -101,6 +114,10 @@ public class DiscHandler : MonoBehaviour
             objectPlsHelp.returning = false;
             objectPlsHelp.havedisc = true;
             Destroy(this.gameObject);
+        }
+        if (collision.gameObject.tag != "grapplePart" && collision.gameObject.tag != "CanWall" && collision.gameObject.tag != "CantWall" && objectPlsHelp.returning == false)
+        {
+            objectPlsHelp.returning = true;
         }
     }
 }

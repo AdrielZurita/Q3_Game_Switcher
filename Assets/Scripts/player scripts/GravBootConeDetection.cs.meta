@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8906a29ebecb1104b8e4b466aa1f742e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - objectPlsHelp: {instanceID: 0}
+  - PlayerParent: {instanceID: 0}
+  - switchSoundB: {fileID: 8300000, guid: 42fe9476bb6032b4aa5079b157d38922, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
