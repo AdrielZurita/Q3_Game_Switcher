@@ -18,7 +18,9 @@ public class DiscHandler : MonoBehaviour
     GameObject player;
     grapple GrappleScript;
     public AudioClip boxSound;
-
+    public Material positiveDiscMaterial;
+    public Material negativeDiscMaterial;
+    TrailRenderer trailRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,20 @@ public class DiscHandler : MonoBehaviour
         discTransform.Rotate(90f, 0f, 0f);
         player = GameObject.FindGameObjectWithTag("Player");
         GrappleScript = player.GetComponent<grapple>();
+        trailRenderer = GetComponent<TrailRenderer>();
+        // change material to negative disc model if ispositive false
+        if (!objectPlsHelp.isPositive)
+        {
+            GetComponent<Renderer>().material = negativeDiscMaterial;
+            trailRenderer.startColor = new Color(1f, 0f, 0f, 1f);
+            trailRenderer.endColor = new Color(1f, 0f, 0f, 0f);
+        }
+        else
+        {
+            GetComponent<Renderer>().material = positiveDiscMaterial;
+            trailRenderer.startColor = new Color(0f, 0f, 1f, 1f);
+            trailRenderer.endColor = new Color(0f, 0f, 1f, 0f);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
