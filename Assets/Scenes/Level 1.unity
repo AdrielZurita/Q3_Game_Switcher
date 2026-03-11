@@ -20291,7 +20291,7 @@ MonoBehaviour:
   chargeText: {fileID: 1690530556}
   bootsOn: {fileID: 905849967}
   bootsOff: {fileID: 1650201091}
-  gravBootConeDetection: {fileID: 0}
+  gravBootConeDetection: {fileID: 61696468}
 --- !u!114 &643975094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39403,7 +39403,7 @@ MonoBehaviour:
   isHolding: 0
   holdPoint: {fileID: 935384326}
   grabbedObject: {fileID: 0}
-  objectPlsHelp: {fileID: 0}
+  objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
 --- !u!114 &1351580380
 MonoBehaviour:
   m_ObjectHideFlags: 0

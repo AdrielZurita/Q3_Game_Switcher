@@ -2043,7 +2043,7 @@ MonoBehaviour:
   isHolding: 0
   holdPoint: {fileID: 1610687173}
   grabbedObject: {fileID: 0}
-  objectPlsHelp: {fileID: 0}
+  objectPlsHelp: {fileID: 11400000, guid: caa131806c7dedc47a136dfb64884f22, type: 2}
 --- !u!114 &39677309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24916,7 +24916,7 @@ MonoBehaviour:
   chargeText: {fileID: 1764683966}
   bootsOn: {fileID: 1008620657}
   bootsOff: {fileID: 454140509}
-  gravBootConeDetection: {fileID: 0}
+  gravBootConeDetection: {fileID: 1044383277}
 --- !u!114 &623807728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45643,7 +45643,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
