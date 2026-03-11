@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class gateOpener : MonoBehaviour
 {
-    // right now, the opening animation automatically plays and loops. change it so that collision plays it once and never again, there are two objects that open with seperate animators
     [SerializeField] private Animator leftGateAnimator;
     [SerializeField] private Animator rightGateAnimator;
     public bool gateOpened = false;
