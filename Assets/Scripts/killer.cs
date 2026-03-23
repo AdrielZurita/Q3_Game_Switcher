@@ -9,7 +9,7 @@ public class killer : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && objectPlsHelp != null)
         {
-            objectPlsHelp.playerHealth -= 1f * Time.deltaTime;
+            objectPlsHelp.playerHealth -= 100000000000f * Time.deltaTime;
         }
     }
 }
