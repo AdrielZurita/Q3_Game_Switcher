@@ -16,5 +16,7 @@ public class ObjectPlsHelp : ScriptableObject
     public float maxHealth = 100f;
     public bool canMove = true;
     public bool canThrow = true;
+    public bool canCam = true;
     public bool beingPulled = false;
+    public float sens = 2000;
 }
