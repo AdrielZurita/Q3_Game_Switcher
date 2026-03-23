@@ -7,6 +7,7 @@ public class ThrowDisc : MonoBehaviour
     public GameObject discObj;
     public float throwVelocity = 50f;
     public float returnVelocity = 30f;
+    public float throwOffset = 0.5f;
     public ObjectPlsHelp objectPlsHelp;
     public Transform playerTransform;
     public AudioClip throwSound;
@@ -23,7 +24,8 @@ public class ThrowDisc : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && objectPlsHelp.havedisc == true && objectPlsHelp.canThrow)
         {
-            GameObject disc = Instantiate(discObj, transform.position, transform.rotation);
+            Vector3 spawnPosition = transform.position + transform.forward * throwOffset;
+            GameObject disc = Instantiate(discObj, spawnPosition, transform.rotation);
             AudioSource.PlayClipAtPoint(throwSound, playerTransform.position);
             Rigidbody discRb = disc.GetComponent<Rigidbody>();
             if (discRb != null)

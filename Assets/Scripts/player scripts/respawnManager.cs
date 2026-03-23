@@ -50,7 +50,35 @@ public class respawnManager : MonoBehaviour
                 gb.grabbedObject = null;
             }
             gb.isHolding = false;
+
+            ResetGrabbables();
+
             fadeCanvasGroup.alpha = 0;
+        }
+    }
+
+    private void ResetGrabbables()
+    {
+        GameObject[] allObjects = GameObject.FindObjectsByType<GameObject>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (GameObject obj in allObjects)
+        {
+            if ((gb.grabLayer.value & (1 << obj.layer)) != 0)
+            {
+                GrabbableSpawn gs = obj.GetComponent<GrabbableSpawn>();
+                if (gs != null)
+                {
+                    gs.ResetToSpawn();
+                }
+                else
+                {
+                    Rigidbody rb = obj.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.velocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                    }
+                }
+            }
         }
     }
 

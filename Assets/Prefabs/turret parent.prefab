@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 1554429336834369872}
   - component: {fileID: 8569789196788896887}
   - component: {fileID: 288293027032450636}
+  - component: {fileID: 8626045875651431785}
   m_Layer: 20
   m_Name: turret
   m_TagString: turret
@@ -839,6 +840,18 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &8626045875651431785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3913862713001622634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60bd8363e3da8243b15d426d30a3bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3924564245704746720
 GameObject:
   m_ObjectHideFlags: 0
